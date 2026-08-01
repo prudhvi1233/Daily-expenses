@@ -57,7 +57,7 @@ const CalendarPage = () => {
             return (
               <button
                 key={dateStr}
-                onClick={() => navigate(`/calendar/${dateStr}`)}
+                onClick={() => navigate(`/dashboard/calendar/${dateStr}`)}
                 className={`aspect-square rounded-md flex items-center justify-center text-xs transition-all duration-200 hover:scale-110 ${getColorClass(amount)} ${isToday ? 'ring-2 ring-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)] z-10 text-white font-bold' : ''}`}
                 title={`${format(day, 'MMM d, yyyy')}${amount ? `: ₹${amount.toFixed(2)}` : ''}${isToday ? ' (Today)' : ''}`}
               >

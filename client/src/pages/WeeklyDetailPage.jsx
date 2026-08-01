@@ -80,15 +80,17 @@ const WeeklyDetailPage = () => {
 
   return (
     <div className="pb-8">
-      <div className="flex items-center gap-4 mb-8">
-        <button onClick={() => navigate('/weekly')} className="p-2 glass-panel hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors">
-          <MdArrowBack size={24} />
-        </button>
-        <div>
-          <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
-            {format(weekInfo.weekStart, 'MMMM d')} - {format(weekInfo.weekEnd, 'MMMM d, yyyy')}
-          </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Week {weekIndex + 1} of {parsedYear}</p>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <button onClick={() => navigate('/dashboard/weekly')} className="p-2 glass-panel hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors">
+            <MdArrowBack size={24} />
+          </button>
+          <div>
+            <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+              {format(weekInfo.weekStart, 'MMMM d')} - {format(weekInfo.weekEnd, 'MMMM d, yyyy')}
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 mt-1">Week {weekIndex + 1} of {parsedYear}</p>
+          </div>
         </div>
       </div>
 

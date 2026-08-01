@@ -49,9 +49,12 @@ const WeeklySummaryPage = () => {
         {weeklyData.map((week, index) => {
           const isCurrent = isSameWeek(week.weekStart, new Date(), { weekStartsOn: 1 });
           return (
-            <div 
+            <motion.div 
               key={week.weekStart.toISOString()}
-              onClick={() => navigate(`/weekly/${currentYear}/${weeks.length - index}`)}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+              onClick={() => navigate(`/dashboard/weekly/${currentYear}/${weeks.length - index}`)}
               className={`glass-panel p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer flex justify-between items-center group relative overflow-hidden ${
                 isCurrent 
                 ? 'bg-blue-500/10 border-blue-500/30 dark:border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:border-blue-400' 
