@@ -1,5 +1,6 @@
 import React, { useState, useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format, eachWeekOfInterval, startOfYear, endOfYear, endOfWeek, parseISO, isSameWeek } from 'date-fns';
 import { MdChevronLeft, MdChevronRight, MdViewWeek } from 'react-icons/md';
@@ -78,7 +79,7 @@ const WeeklySummaryPage = () => {
               }`}>
                 <MdViewWeek size={24} />
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
