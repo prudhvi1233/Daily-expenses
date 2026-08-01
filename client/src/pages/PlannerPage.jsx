@@ -27,7 +27,7 @@ const PlannerPage = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-100">Weekly Planner</h1>
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Weekly Planner</h1>
         <button 
           onClick={() => { setEditingTask(null); setIsModalOpen(true); }}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)]"
@@ -45,8 +45,8 @@ const PlannerPage = () => {
             onClick={() => setActiveTab(day)}
             className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
               activeTab === day 
-              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-              : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200 border border-slate-700'
+              ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/30' 
+              : 'glass-panel text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
             {day}
@@ -54,8 +54,8 @@ const PlannerPage = () => {
         ))}
       </div>
 
-      <div className="bg-slate-800 rounded-2xl border border-slate-700 shadow-lg p-6">
-        <h2 className="text-xl font-semibold text-slate-100 mb-6">{activeTab}'s Schedule</h2>
+      <div className="glass-panel p-6">
+        <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6">{activeTab}'s Schedule</h2>
         <TaskList tasks={activeTasks} onEdit={handleEdit} />
       </div>
 

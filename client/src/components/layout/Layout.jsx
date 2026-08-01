@@ -14,7 +14,14 @@ const Layout = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex h-screen bg-slate-900 overflow-hidden">
+    <div className="flex h-screen bg-transparent overflow-hidden relative">
+      {/* Global Watermark */}
+      <div className="fixed bottom-6 right-6 pointer-events-none z-50 opacity-30 select-none">
+        <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap tracking-wider">
+          Designed by Prudhvi
+        </div>
+      </div>
+
       <Sidebar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
       <div className="flex-1 flex flex-col md:ml-64 relative w-full">
         <Navbar onMenuClick={() => setIsMobileMenuOpen(true)} />

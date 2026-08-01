@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { MdVisibility, MdVisibilityOff, MdEmail, MdLock } from 'react-icons/md';
+import AuthBackground from '../components/AuthBackground';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,60 +16,78 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="min-h-screen flex items-center justify-center bg-slate-900 p-4"
-    >
-      <div className="max-w-md w-full bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
-        <h2 className="text-3xl font-bold text-slate-100 text-center mb-6">Welcome Back</h2>
-        {error && <div className="bg-red-500/10 text-red-400 p-3 rounded-lg text-sm mb-4 border border-red-500/20">{error}</div>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm text-slate-400 mb-1 block">Email</label>
-            <input 
-              type="email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 outline-none focus:border-blue-500 transition-colors"
-              required
-            />
+    <AuthBackground>
+      <motion.div 
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        className="auth-glass p-8"
+      >
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Welcome Back</h2>
+        <p className="text-slate-600 dark:text-slate-400 mb-8 text-sm font-medium">Sign in to continue to your dashboard.</p>
+        
+        {error && (
+          <div className="bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-200 p-3 rounded-xl text-sm mb-6 border border-red-500/20 dark:border-red-500/30 backdrop-blur-md">
+            {error}
           </div>
+        )}
+        
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="text-sm text-slate-400 mb-1 block">Password</label>
-            <div className="relative">
+            <div className="relative group">
+              <MdEmail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 group-focus-within:text-blue-600 dark:group-focus-within:text-blue-400 transition-colors" size={20} />
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="auth-input w-full p-3.5 pl-12"
+                placeholder="Email Address"
+                required
+              />
+            </div>
+          </div>
+          
+          <div>
+            <div className="relative group">
+              <MdLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 group-focus-within:text-blue-600 dark:group-focus-within:text-blue-400 transition-colors" size={20} />
               <input 
                 type={showPassword ? 'text' : 'password'} 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-200 outline-none focus:border-blue-500 transition-colors pr-10"
+                className="auth-input w-full p-3.5 pl-12 pr-12"
+                placeholder="Password"
                 required
               />
               <button 
                 type="button" 
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors"
               >
                 {showPassword ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
               </button>
             </div>
           </div>
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium p-3 rounded-lg transition-colors shadow-lg shadow-blue-500/20 mt-2">
-            Log In
+          
+          <button type="submit" className="auth-btn w-full mt-2">
+            Sign In
           </button>
         </form>
-        <p className="mt-6 text-center text-slate-400 text-sm">
-          Don't have an account? <Link to="/register" className="text-blue-400 hover:text-blue-300">Sign Up</Link>
+        
+        <p className="mt-8 text-center text-slate-600 dark:text-slate-400 text-sm font-medium">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
+            Create Account
+          </Link>
         </p>
-      </div>
-    </motion.div>
+      </motion.div>
+    </AuthBackground>
   );
 };
 

@@ -49,13 +49,13 @@ const DailyExpensePage = () => {
   };
 
   return (
-    <div>
+    <div className="pb-8">
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-4">
-          <button onClick={() => navigate('/calendar')} className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700">
+          <button onClick={() => navigate('/calendar')} className="p-2 glass-panel hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors">
             <MdArrowBack size={24} />
           </button>
-          <h1 className="text-3xl font-bold text-slate-100">
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
             {format(parsedDate, 'MMMM d, yyyy')}
           </h1>
         </div>
@@ -70,33 +70,33 @@ const DailyExpensePage = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-4 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20"><MdReceipt size={28} /></div>
-          <div><p className="text-sm text-slate-400 font-medium mb-1">Total Spent</p><h3 className="text-2xl font-bold text-slate-100">₹{summary.total.toFixed(2)}</h3></div>
+          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Total Spent</p><h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">₹{summary.total.toFixed(2)}</h3></div>
         </div>
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-4 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"><MdReceipt size={28} /></div>
-          <div><p className="text-sm text-slate-400 font-medium mb-1">Transactions</p><h3 className="text-2xl font-bold text-slate-100">{summary.count}</h3></div>
+          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Transactions</p><h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{summary.count}</h3></div>
         </div>
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-4 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20"><MdTrendingUp size={28} /></div>
-          <div><p className="text-sm text-slate-400 font-medium mb-1">Highest Expense</p><h3 className="text-2xl font-bold text-slate-100">₹{summary.highest.toFixed(2)}</h3></div>
+          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Highest Expense</p><h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">₹{summary.highest.toFixed(2)}</h3></div>
         </div>
-        <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg flex items-center gap-4">
+        <div className="glass-panel p-6 flex items-center gap-4">
           <div className="p-4 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20"><MdCategory size={28} /></div>
-          <div><p className="text-sm text-slate-400 font-medium mb-1">Top Category</p><h3 className="text-xl font-bold text-slate-100 truncate">{summary.topCategory}</h3></div>
+          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Top Category</p><h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 truncate">{summary.topCategory}</h3></div>
         </div>
       </div>
 
-      <div className="bg-slate-800 rounded-2xl border border-slate-700 shadow-lg overflow-hidden mb-8">
-        <div className="p-6 border-b border-slate-700">
-          <h2 className="text-xl font-semibold text-slate-100">Transactions</h2>
+      <div className="glass-panel overflow-hidden mb-8">
+        <div className="p-6 border-b border-black/10 dark:border-white/10">
+          <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Transactions</h2>
         </div>
         <div className="p-6">
           {dailyExpenses.length > 0 ? (
             <TransactionTable expenses={dailyExpenses} onEdit={handleEdit} />
           ) : (
-            <div className="text-center py-12 text-slate-400">
+            <div className="text-center py-12 text-slate-500 dark:text-slate-400">
               No expenses recorded for this date.
             </div>
           )}

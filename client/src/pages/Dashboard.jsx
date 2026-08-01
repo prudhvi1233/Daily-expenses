@@ -8,13 +8,13 @@ import TaskForm from '../components/TaskForm';
 import { MdToday, MdDateRange, MdCalendarMonth, MdAnalytics, MdReceipt, MdAdd } from 'react-icons/md';
 
 const SummaryCard = ({ title, amount, icon, colorClass }) => (
-  <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+  <div className="glass-panel p-6 flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
     <div className={`p-4 rounded-xl ${colorClass}`}>
       {icon}
     </div>
     <div>
-      <p className="text-sm text-slate-400 font-medium mb-1">{title}</p>
-      <h3 className="text-2xl font-bold text-slate-100">
+      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">{title}</p>
+      <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
         {title === 'Total Transactions' ? amount : `₹${amount.toFixed(2)}`}
       </h3>
     </div>
@@ -31,7 +31,7 @@ const Dashboard = () => {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   
-  if (expensesLoading || tasksLoading) return <div className="text-center py-10 text-slate-400 animate-pulse">Loading dashboard...</div>;
+  if (expensesLoading || tasksLoading) return <div className="text-center py-10 text-slate-500 dark:text-slate-400 animate-pulse">Loading dashboard...</div>;
 
   const { today, week, month, year, totalCount } = calculateSummaries(expenses);
 
@@ -48,7 +48,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-100">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Dashboard</h1>
         <button 
           onClick={() => setIsExpenseAddOpen(true)}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20"
@@ -87,15 +87,15 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="mt-8 bg-slate-800 rounded-2xl border border-slate-700 shadow-lg p-6">
+      <div className="mt-8 glass-panel p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-100 mb-1">Today's Planner</h2>
-            <p className="text-slate-400 text-sm">Schedule for {currentDayName}</p>
+            <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1">Today's Planner</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Schedule for {currentDayName}</p>
           </div>
           <button 
             onClick={() => { setEditingTask(null); setIsTaskModalOpen(true); }}
-            className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-xl font-medium transition-colors border border-slate-600"
+            className="flex items-center gap-2 bg-black/5 hover:bg-black/10 text-slate-800 border-black/10 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white px-4 py-2 rounded-xl font-medium transition-colors border dark:border-white/10"
           >
             <MdAdd size={20} />
             <span>Add Task</span>
@@ -104,10 +104,10 @@ const Dashboard = () => {
 
         <div className="mb-8">
           <div className="flex justify-between items-end mb-2">
-            <span className="text-sm font-medium text-slate-300">Today's Progress</span>
-            <span className="text-sm font-bold text-blue-400">{completedTasks} / {todayTasks.length} Tasks Completed</span>
+            <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Today's Progress</span>
+            <span className="text-sm font-bold text-blue-600 dark:text-blue-400">{completedTasks} / {todayTasks.length} Tasks Completed</span>
           </div>
-          <div className="w-full bg-slate-900 rounded-full h-3 border border-slate-700 overflow-hidden">
+          <div className="w-full bg-black/10 dark:bg-black/50 rounded-full h-3 border border-black/10 dark:border-white/10 overflow-hidden">
             <div 
               className="bg-gradient-to-r from-blue-500 to-emerald-400 h-3 rounded-full transition-all duration-500 ease-out" 
               style={{ width: `${progressPercentage}%` }}

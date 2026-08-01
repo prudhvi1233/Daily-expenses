@@ -6,12 +6,12 @@ import { AuthContext } from '../../context/AuthContext';
 const Sidebar = ({ isOpen, onClose }) => {
   const { logout } = useContext(AuthContext);
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: <MdDashboard className="w-5 h-5" /> },
-    { name: 'Planner', path: '/planner', icon: <MdEventAvailable className="w-5 h-5" /> },
-    { name: 'Transactions', path: '/transactions', icon: <MdList className="w-5 h-5" /> },
-    { name: 'Calendar', path: '/calendar', icon: <MdCalendarToday className="w-5 h-5" /> },
-    { name: 'Weekly Summary', path: '/weekly', icon: <MdViewWeek className="w-5 h-5" /> },
-    { name: 'Analytics', path: '/analytics', icon: <MdAnalytics className="w-5 h-5" /> }
+    { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-5 h-5" /> },
+    { name: 'Planner', path: '/dashboard/planner', icon: <MdEventAvailable className="w-5 h-5" /> },
+    { name: 'Transactions', path: '/dashboard/transactions', icon: <MdList className="w-5 h-5" /> },
+    { name: 'Calendar', path: '/dashboard/calendar', icon: <MdCalendarToday className="w-5 h-5" /> },
+    { name: 'Weekly Summary', path: '/dashboard/weekly', icon: <MdViewWeek className="w-5 h-5" /> },
+    { name: 'Analytics', path: '/dashboard/analytics', icon: <MdAnalytics className="w-5 h-5" /> }
   ];
 
   return (
@@ -22,7 +22,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           onClick={onClose}
         ></div>
       )}
-      <div className={`w-64 bg-slate-800 border-r border-slate-700 h-screen fixed top-0 left-0 z-50 flex flex-col transition-transform duration-300 ${
+      <div className={`w-64 bg-white/70 dark:bg-black/40 backdrop-blur-xl border-r border-black/10 dark:border-white/10 h-screen fixed top-0 left-0 z-50 flex flex-col transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}>
         <div className="p-6 flex justify-between items-center">
@@ -39,8 +39,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive 
-                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]' 
-                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-700/50'
+                    ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)] backdrop-blur-md dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/20 dark:shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-black/5 dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5'
                   }`
                 }
               >
@@ -52,7 +52,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         </ul>
         <button 
           onClick={logout} 
-          className="mt-8 flex items-center gap-3 p-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors w-full"
+          className="mt-8 flex items-center gap-3 p-3 rounded-lg text-red-500 hover:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20 hover:backdrop-blur-md transition-colors w-full"
         >
           <MdLogout size={24} />
           <span className="font-medium">Logout</span>

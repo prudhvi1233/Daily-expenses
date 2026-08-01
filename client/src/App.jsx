@@ -15,16 +15,20 @@ import WeeklyDetailPage from './pages/WeeklyDetailPage';
 import PlannerPage from './pages/PlannerPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Welcome from './pages/Welcome';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-  if (loading) return <div className="h-screen flex items-center justify-center bg-slate-900 text-slate-400">Loading...</div>;
+  if (loading) return <div className="h-screen flex items-center justify-center bg-transparent text-slate-300">Loading...</div>;
   return user ? children : <Navigate to="/login" />;
 };
 
 function App() {
   return (
-    <AuthProvider>
+    <>
+      <div id="bg-light"></div>
+      <div id="bg-dark"></div>
+      <AuthProvider>
       <ExpenseProvider>
         <FinanceProvider>
           <TaskProvider>
@@ -32,8 +36,9 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Welcome />} />
             
-            <Route path="/" element={
+            <Route path="/dashboard" element={
               <PrivateRoute>
                 <Layout />
               </PrivateRoute>
@@ -52,7 +57,8 @@ function App() {
           </TaskProvider>
         </FinanceProvider>
       </ExpenseProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </>
   );
 }
 

@@ -33,15 +33,15 @@ const TaskForm = ({ task, onClose, defaultDay }) => {
   };
 
   return (
-    <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl w-full max-w-md mx-auto relative">
-      <h2 className="text-2xl font-bold mb-4 text-white">{task ? 'Edit Task' : 'Add Task'}</h2>
+    <div className="glass-panel p-6 w-full max-w-md mx-auto relative">
+      <h2 className="text-2xl font-bold mb-4 text-slate-800 dark:text-white">{task ? 'Edit Task' : 'Add Task'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Day</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Day</label>
             <select 
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
               {...register('dayOfWeek', { required: true })}
             >
               {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
@@ -50,44 +50,44 @@ const TaskForm = ({ task, onClose, defaultDay }) => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Time</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Time</label>
             <input 
               type="time"
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
               {...register('time', { required: true })}
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-400 mb-1">Title</label>
+          <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Title</label>
           <input 
             type="text"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 transition-all outline-none"
+            className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 transition-all outline-none"
             {...register('title', { required: 'Title is required' })}
           />
           {errors.title && <span className="text-red-500 text-xs mt-1 block">{errors.title.message}</span>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-400 mb-1">Description (Optional)</label>
+          <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Description (Optional)</label>
           <textarea 
             rows="2"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 transition-all outline-none"
+            className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 transition-all outline-none"
             {...register('description')}
           ></textarea>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-400 mb-1">Priority</label>
+          <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Priority</label>
           <div className="flex gap-4">
             {['Low', 'Medium', 'High'].map(level => (
-              <label key={level} className="flex items-center gap-2 text-slate-300 cursor-pointer">
+              <label key={level} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 cursor-pointer">
                 <input 
                   type="radio" 
                   value={level} 
                   {...register('priority')} 
-                  className="w-4 h-4 text-blue-500 bg-slate-900 border-slate-700 focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-500 bg-black/5 dark:bg-slate-900 border-black/10 dark:border-slate-700 focus:ring-blue-500"
                 />
                 {level}
               </label>
@@ -95,11 +95,11 @@ const TaskForm = ({ task, onClose, defaultDay }) => {
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-slate-700">
+        <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-black/10 dark:border-slate-700">
           <button 
             type="button" 
             onClick={onClose}
-            className="px-4 py-2 text-slate-300 hover:text-white transition-colors"
+            className="px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
           >
             Cancel
           </button>

@@ -36,24 +36,24 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
   };
 
   return (
-    <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{expense ? 'Edit Expense' : 'Add Expense'}</h2>
+    <div className="glass-panel p-6 w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-4 text-slate-800 dark:text-white">{expense ? 'Edit Expense' : 'Add Expense'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-slate-400 mb-1">Amount</label>
+          <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Amount</label>
           <input 
             type="number" step="0.01"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
+            className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
             {...register('amount', { required: 'Amount is required', min: 0.01 })}
           />
           {errors.amount && <span className="text-red-500 text-xs mt-1 block">{errors.amount.message}</span>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-400 mb-1">Description</label>
+          <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Description</label>
           <input 
             type="text"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
+            className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
             {...register('description', { required: 'Description is required' })}
           />
           {errors.description && <span className="text-red-500 text-xs mt-1 block">{errors.description.message}</span>}
@@ -61,9 +61,9 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Category</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Category</label>
             <select 
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
               {...register('category', { required: true })}
             >
               {['Food', 'Travel', 'Shopping', 'Medical', 'Education', 'Entertainment', 'Recharge', 'Bills', 'Home', 'Fuel', 'Others'].map(cat => (
@@ -72,9 +72,9 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Payment Method</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Payment Method</label>
             <select 
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
               {...register('paymentMethod', { required: true })}
             >
               {['Cash', 'UPI', 'Credit Card', 'Debit Card', 'Net Banking'].map(method => (
@@ -86,28 +86,28 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Date</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Date</label>
             <input 
               type="date"
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
               {...register('date', { required: true })}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">Time</label>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Time</label>
             <input 
               type="time"
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
               {...register('time', { required: true })}
             />
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-slate-700">
+        <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-black/10 dark:border-slate-700">
           <button 
             type="button" 
             onClick={onClose}
-            className="px-4 py-2 text-slate-300 hover:text-white transition-colors"
+            className="px-4 py-2 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
           >
             Cancel
           </button>

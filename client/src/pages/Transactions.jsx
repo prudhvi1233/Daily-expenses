@@ -60,19 +60,21 @@ const Transactions = () => {
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h1 className="text-3xl font-bold text-slate-100">Transactions</h1>
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Transactions</h1>
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex bg-slate-800 rounded-lg border border-slate-700 overflow-hidden shadow-sm">
-            <button onClick={() => exportToCSV(filteredExpenses)} className="px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 transition-colors border-r border-slate-700">CSV</button>
-            <button onClick={() => exportToExcel(filteredExpenses)} className="px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 transition-colors border-r border-slate-700">Excel</button>
-            <button onClick={() => exportToPDF(filteredExpenses)} className="px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 transition-colors flex items-center gap-1">PDF</button>
+          <div className="flex glass-panel overflow-hidden shadow-sm">
+            <button onClick={() => exportToCSV(filteredExpenses)} className="px-3 py-2 text-sm text-slate-600 hover:bg-black/10 dark:text-slate-300 dark:hover:bg-white/10 transition-colors border-r border-black/10 dark:border-white/10">CSV</button>
+            <button onClick={() => exportToExcel(filteredExpenses)} className="px-3 py-2 text-sm text-slate-600 hover:bg-black/10 dark:text-slate-300 dark:hover:bg-white/10 transition-colors border-r border-black/10 dark:border-white/10">Excel</button>
+            <button onClick={() => exportToPDF(filteredExpenses)} className="px-3 py-2 text-sm text-slate-600 hover:bg-black/10 dark:text-slate-300 dark:hover:bg-white/10 transition-colors flex items-center gap-1">PDF</button>
           </div>
         </div>
       </div>
 
       <FilterBar filters={filters} setFilters={setFilters} />
 
-      <TransactionTable expenses={filteredExpenses} onEdit={handleEdit} />
+      <div className="glass-panel overflow-hidden">
+        <TransactionTable expenses={filteredExpenses} onEdit={handleEdit} />
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">

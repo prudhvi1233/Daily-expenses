@@ -2,9 +2,9 @@ import React, { useContext, useMemo } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 
 const StatCard = ({ title, value }) => (
-  <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
-    <p className="text-sm text-slate-400 font-medium mb-2">{title}</p>
-    <h3 className="text-xl font-bold text-slate-100">{value}</h3>
+  <div className="glass-panel p-6">
+    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-2">{title}</p>
+    <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{value}</h3>
   </div>
 );
 
@@ -45,12 +45,12 @@ const Analytics = () => {
     };
   }, [expenses]);
 
-  if (loading) return <div className="text-center py-10 text-slate-400">Loading analytics...</div>;
-  if (!stats) return <div className="text-center py-10 text-slate-400">Not enough data for analytics.</div>;
+  if (loading) return <div className="text-center py-10 text-slate-500 dark:text-slate-400">Loading analytics...</div>;
+  if (!stats) return <div className="text-center py-10 text-slate-500 dark:text-slate-400">Not enough data for analytics.</div>;
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-100 mb-8">Analytics Insights</h1>
+      <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-8">Analytics Insights</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <StatCard title="Highest Expense" value={`₹${stats.highest.amount.toFixed(2)} (${stats.highest.category})`} />

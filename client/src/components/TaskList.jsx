@@ -31,7 +31,7 @@ const TaskList = ({ tasks, onEdit }) => {
   };
 
   if (tasks.length === 0) {
-    return <div className="text-center py-8 text-slate-400">No tasks scheduled for this day.</div>;
+    return <div className="text-center py-8 text-slate-500 dark:text-slate-400">No tasks scheduled for this day.</div>;
   }
 
   return (
@@ -41,8 +41,8 @@ const TaskList = ({ tasks, onEdit }) => {
           key={task._id} 
           className={`group flex items-center gap-4 p-4 rounded-xl border transition-all ${
             task.completed 
-            ? 'bg-slate-800/30 border-slate-700/50 opacity-60' 
-            : 'bg-slate-800 border-slate-700 hover:border-slate-600 shadow-sm hover:shadow-md'
+            ? 'bg-black/5 dark:bg-black/20 border-black/5 dark:border-white/5 opacity-60' 
+            : 'bg-white/50 dark:bg-black/40 border-black/10 hover:border-black/20 dark:border-white/10 dark:hover:border-white/20 shadow-sm hover:shadow-md'
           }`}
         >
           <button 
@@ -52,12 +52,12 @@ const TaskList = ({ tasks, onEdit }) => {
             {task.completed ? <MdCheckCircle size={28} /> : <MdRadioButtonUnchecked size={28} />}
           </button>
           
-          <div className="w-20 flex-shrink-0 text-slate-400 font-medium text-sm">
+          <div className="w-20 flex-shrink-0 text-slate-600 dark:text-slate-400 font-medium text-sm">
             {formatTime12Hour(task.time)}
           </div>
 
           <div className="flex-1 min-w-0">
-            <h4 className={`font-semibold truncate ${task.completed ? 'text-slate-400 line-through' : 'text-slate-100'}`}>
+            <h4 className={`font-semibold truncate ${task.completed ? 'text-slate-500 dark:text-slate-400 line-through' : 'text-slate-800 dark:text-slate-100'}`}>
               {task.title}
             </h4>
             {task.description && (
@@ -72,13 +72,13 @@ const TaskList = ({ tasks, onEdit }) => {
             <div className="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
               <button 
                 onClick={() => onEdit(task)}
-                className="p-2 text-slate-400 hover:text-blue-400 bg-slate-900/50 hover:bg-slate-900 rounded-lg transition-colors"
+                className="p-2 text-slate-600 hover:text-blue-600 bg-black/5 hover:bg-black/10 dark:text-slate-400 dark:hover:text-blue-400 dark:bg-slate-900/50 dark:hover:bg-slate-900 rounded-lg transition-colors"
               >
                 <MdEdit size={18} />
               </button>
               <button 
                 onClick={() => handleDelete(task._id)}
-                className="p-2 text-slate-400 hover:text-red-400 bg-slate-900/50 hover:bg-slate-900 rounded-lg transition-colors"
+                className="p-2 text-slate-600 hover:text-red-600 bg-black/5 hover:bg-black/10 dark:text-slate-400 dark:hover:text-red-400 dark:bg-slate-900/50 dark:hover:bg-slate-900 rounded-lg transition-colors"
               >
                 <MdDelete size={18} />
               </button>
