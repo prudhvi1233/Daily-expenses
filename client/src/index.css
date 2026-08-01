@@ -150,6 +150,22 @@
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
   }
 
+  /* Fix Autofill Background (Webkit) */
+  .auth-input:-webkit-autofill,
+  .auth-input:-webkit-autofill:hover, 
+  .auth-input:-webkit-autofill:focus, 
+  .auth-input:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: #1e293b !important;
+  }
+  .dark .auth-input:-webkit-autofill,
+  .dark .auth-input:-webkit-autofill:hover, 
+  .dark .auth-input:-webkit-autofill:focus, 
+  .dark .auth-input:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: white !important;
+  }
+
   .auth-btn {
     background: linear-gradient(to right, #2563eb, #06b6d4);
     color: white;
