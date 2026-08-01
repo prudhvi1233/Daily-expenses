@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format } from 'date-fns';
 
-const ExpenseForm = ({ expense, onClose }) => {
+const ExpenseForm = ({ expense, onClose, defaultDate }) => {
   const { addExpense, updateExpense } = useContext(ExpenseContext);
   const [submitting, setSubmitting] = useState(false);
   
@@ -12,7 +12,7 @@ const ExpenseForm = ({ expense, onClose }) => {
       ...expense,
       date: format(new Date(expense.date), 'yyyy-MM-dd')
     } : {
-      date: format(new Date(), 'yyyy-MM-dd'),
+      date: defaultDate || format(new Date(), 'yyyy-MM-dd'),
       time: format(new Date(), 'HH:mm'),
       category: 'Food',
       paymentMethod: 'UPI'

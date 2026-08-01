@@ -22,6 +22,7 @@ app.use('/api/expenses', require('./routes/expenseRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/budgets', require('./routes/budgetRoutes'));
 app.use('/api/goals', require('./routes/goalRoutes'));
+app.use('/api/tasks', require('./routes/taskRoutes'));
 
 // Basic Route
 app.get('/', (req, res) => {

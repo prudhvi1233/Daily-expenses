@@ -3,11 +3,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ExpenseProvider } from './context/ExpenseContext';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { FinanceProvider } from './context/FinanceContext';
+import { TaskProvider } from './context/TaskContext';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
 import Analytics from './pages/Analytics';
-import BudgetsAndGoals from './pages/BudgetsAndGoals';
+import CalendarPage from './pages/CalendarPage';
+import DailyExpensePage from './pages/DailyExpensePage';
+import WeeklySummaryPage from './pages/WeeklySummaryPage';
+import WeeklyDetailPage from './pages/WeeklyDetailPage';
+import PlannerPage from './pages/PlannerPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -22,7 +27,8 @@ function App() {
     <AuthProvider>
       <ExpenseProvider>
         <FinanceProvider>
-        <Router>
+          <TaskProvider>
+            <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -34,11 +40,16 @@ function App() {
             }>
               <Route index element={<Dashboard />} />
               <Route path="transactions" element={<Transactions />} />
+              <Route path="calendar" element={<CalendarPage />} />
+              <Route path="calendar/:date" element={<DailyExpensePage />} />
+              <Route path="weekly" element={<WeeklySummaryPage />} />
+              <Route path="weekly/:year/:week" element={<WeeklyDetailPage />} />
+              <Route path="planner" element={<PlannerPage />} />
               <Route path="analytics" element={<Analytics />} />
-              <Route path="budgets" element={<BudgetsAndGoals />} />
             </Route>
           </Routes>
-        </Router>
+            </Router>
+          </TaskProvider>
         </FinanceProvider>
       </ExpenseProvider>
     </AuthProvider>

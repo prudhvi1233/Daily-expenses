@@ -3,7 +3,6 @@ import TransactionTable from '../components/TransactionTable';
 import ExpenseForm from '../components/ExpenseForm';
 import FilterBar from '../components/FilterBar';
 import { ExpenseContext } from '../context/ExpenseContext';
-import { MdAdd } from 'react-icons/md';
 import { isToday, isYesterday, subDays, isThisMonth, isThisYear, isAfter } from 'date-fns';
 import { exportToCSV, exportToExcel, exportToPDF } from '../utils/exportUtils';
 
@@ -68,13 +67,6 @@ const Transactions = () => {
             <button onClick={() => exportToExcel(filteredExpenses)} className="px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 transition-colors border-r border-slate-700">Excel</button>
             <button onClick={() => exportToPDF(filteredExpenses)} className="px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 transition-colors flex items-center gap-1">PDF</button>
           </div>
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20"
-          >
-            <MdAdd size={20} />
-            Add Expense
-          </button>
         </div>
       </div>
 

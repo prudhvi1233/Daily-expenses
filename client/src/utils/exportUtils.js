@@ -2,11 +2,12 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { format } from 'date-fns';
+import { formatTime12Hour } from './formatTime';
 
 const getTableData = (expenses) => {
   return expenses.map(exp => [
     format(new Date(exp.date), 'MMM dd, yyyy'),
-    exp.time,
+    formatTime12Hour(exp.time),
     exp.description,
     exp.category,
     exp.paymentMethod,

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format } from 'date-fns';
 import { MdEdit, MdDelete } from 'react-icons/md';
+import { formatTime12Hour } from '../utils/formatTime';
 
 const TransactionTable = ({ expenses, onEdit }) => {
   const { loading, deleteExpense } = useContext(ExpenseContext);
@@ -27,7 +28,7 @@ const TransactionTable = ({ expenses, onEdit }) => {
             <tr key={expense._id} className="hover:bg-slate-700/30 transition-colors">
               <td className="p-4">
                 <div className="font-medium text-slate-200">{format(new Date(expense.date), 'MMM dd, yyyy')}</div>
-                <div className="text-xs text-slate-400">{expense.time}</div>
+                <div className="text-xs text-slate-400">{formatTime12Hour(expense.time)}</div>
               </td>
               <td className="p-4 text-slate-300 font-medium">{expense.description}</td>
               <td className="p-4">
