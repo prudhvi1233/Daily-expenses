@@ -1,9 +1,20 @@
 import React, { useContext } from 'react';
 import { MdMenu, MdLightMode, MdDarkMode } from 'react-icons/md';
 import { ThemeContext } from '../../context/ThemeContext';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ onMenuClick }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user, profilePic } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  // Get first letter of name or email, default to 'U'
+  const getInitials = () => {
+    if (user?.name) return user.name.charAt(0).toUpperCase();
+    if (user?.email) return user.email.charAt(0).toUpperCase();
+    return 'U';
+  };
   
   return (
     <header className="h-20 bg-white/60 dark:bg-black/20 backdrop-blur-xl border-b border-black/10 dark:border-white/10 sticky top-0 z-10 flex items-center px-4 md:px-8 transition-colors">
@@ -17,7 +28,7 @@ const Navbar = ({ onMenuClick }) => {
           </h2>
         </div>
         <div className="hidden md:block">
-          <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Welcome Back!</h2>
+          <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Welcome Back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}!</h2>
         </div>
         <div className="flex items-center gap-4">
           <button 
@@ -28,9 +39,17 @@ const Navbar = ({ onMenuClick }) => {
             {theme === 'dark' ? <MdLightMode size={22} /> : <MdDarkMode size={22} />}
           </button>
           
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-emerald-500 p-[2px] shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-            <div className="w-full h-full rounded-full bg-white dark:bg-black/50 backdrop-blur-sm flex items-center justify-center">
-              <span className="text-sm font-bold text-slate-800 dark:text-white">PT</span>
+          <div 
+            onClick={() => navigate('/dashboard/profile')}
+            className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-500 p-[2px] shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-105 transition-all cursor-pointer overflow-hidden"
+            title="Go to Profile"
+          >
+            <div className="w-full h-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden">
+              {profilePic ? (
+                <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-tr from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">{getInitials()}</span>
+              )}
             </div>
           </div>
         </div>

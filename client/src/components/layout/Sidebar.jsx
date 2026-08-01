@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdDashboard, MdList, MdAnalytics, MdLogout, MdSavings, MdCalendarToday, MdViewWeek, MdEventAvailable } from 'react-icons/md';
+import { MdDashboard, MdList, MdAnalytics, MdLogout, MdSavings, MdCalendarToday, MdViewWeek, MdEventAvailable, MdPerson } from 'react-icons/md';
 import { AuthContext } from '../../context/AuthContext';
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -11,7 +11,8 @@ const Sidebar = ({ isOpen, onClose }) => {
     { name: 'Transactions', path: '/dashboard/transactions', icon: <MdList className="w-5 h-5" /> },
     { name: 'Calendar', path: '/dashboard/calendar', icon: <MdCalendarToday className="w-5 h-5" /> },
     { name: 'Weekly Summary', path: '/dashboard/weekly', icon: <MdViewWeek className="w-5 h-5" /> },
-    { name: 'Analytics', path: '/dashboard/analytics', icon: <MdAnalytics className="w-5 h-5" /> }
+    { name: 'Analytics', path: '/dashboard/analytics', icon: <MdAnalytics className="w-5 h-5" /> },
+    { name: 'Profile', path: '/dashboard/profile', icon: <MdPerson className="w-5 h-5" /> }
   ];
 
   return (

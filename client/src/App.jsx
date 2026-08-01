@@ -13,6 +13,7 @@ import DailyExpensePage from './pages/DailyExpensePage';
 import WeeklySummaryPage from './pages/WeeklySummaryPage';
 import WeeklyDetailPage from './pages/WeeklyDetailPage';
 import PlannerPage from './pages/PlannerPage';
+import ProfilePage from './pages/ProfilePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Welcome from './pages/Welcome';
@@ -51,6 +52,7 @@ function App() {
               <Route path="weekly/:year/:week" element={<WeeklyDetailPage />} />
               <Route path="planner" element={<PlannerPage />} />
               <Route path="analytics" element={<Analytics />} />
+              <Route path="profile" element={<ProfilePage />} />
             </Route>
           </Routes>
             </Router>
