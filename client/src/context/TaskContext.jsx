@@ -14,7 +14,12 @@ export const TaskProvider = ({ children }) => {
     try {
       setLoading(true);
       const res = await api.get('/tasks');
-      setTasks(res.data);
+      if (Array.isArray(res.data)) {
+        setTasks(res.data);
+      } else {
+        console.error("Tasks API did not return an array:", res.data);
+        setTasks([]);
+      }
     } catch (err) {
       console.error('Error fetching tasks:', err);
     } finally {

@@ -1,0 +1,19 @@
+{
+  "name": "Expenses",
+  "short_name": "Expenses",
+  "description": "Personal Expense Tracker & Analyzer",
+  "theme_color": "#0B1220",
+  "background_color": "#0B1220",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/app-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

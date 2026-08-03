@@ -33,6 +33,8 @@ const Dashboard = () => {
   
   if (expensesLoading || tasksLoading) return <div className="text-center py-10 text-slate-500 dark:text-slate-400 animate-pulse">Loading dashboard...</div>;
 
+  console.log("Expenses:", expenses);
+  console.log("Is Array?", Array.isArray(expenses));
   const { today, week, month, year, totalCount } = calculateSummaries(expenses);
 
   const currentDayName = DAYS[new Date().getDay()];

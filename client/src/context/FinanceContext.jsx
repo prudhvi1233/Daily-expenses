@@ -17,8 +17,8 @@ export const FinanceProvider = ({ children }) => {
         api.get('/budgets'),
         api.get('/goals')
       ]);
-      setBudgets(budgetsRes.data);
-      setGoals(goalsRes.data);
+      setBudgets(Array.isArray(budgetsRes.data) ? budgetsRes.data : []);
+      setGoals(Array.isArray(goalsRes.data) ? goalsRes.data : []);
     } catch (error) {
       console.error('Error fetching finance data:', error);
     } finally {

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useContext, useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format, eachMonthOfInterval, startOfYear, endOfYear, eachDayOfInterval, startOfMonth, endOfMonth, getDay } from 'date-fns';
@@ -8,6 +8,15 @@ const CalendarPage = () => {
   const { expenses } = useContext(ExpenseContext);
   const navigate = useNavigate();
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const currentMonthRef = useRef(null);
+
+  useEffect(() => {
+    if (currentMonthRef.current) {
+      setTimeout(() => {
+        currentMonthRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }, [currentYear]);
 
   const months = useMemo(() => {
     const start = startOfYear(new Date(currentYear, 0, 1));
@@ -43,7 +52,11 @@ const CalendarPage = () => {
     const isCurrentMonth = format(monthDate, 'yyyy-MM') === format(new Date(), 'yyyy-MM');
 
     return (
-      <div key={monthDate.toISOString()} className={`glass-panel p-4 transition-colors ${isCurrentMonth ? 'border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.15)] bg-blue-500/5' : 'hover:border-black/20 dark:hover:border-white/20'}`}>
+      <div 
+        key={monthDate.toISOString()} 
+        ref={isCurrentMonth ? currentMonthRef : null}
+        className={`glass-panel p-4 transition-colors ${isCurrentMonth ? 'border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.15)] bg-blue-500/5' : 'hover:border-black/20 dark:hover:border-white/20'}`}
+      >
         <h3 className={`text-lg font-bold mb-3 text-center ${isCurrentMonth ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>{format(monthDate, 'MMMM')}</h3>
         <div className="grid grid-cols-7 gap-1 mb-2 text-center text-xs text-slate-600 dark:text-slate-500 font-medium">
           {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(d => <div key={d}>{d}</div>)}

@@ -37,6 +37,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             <li key={item.name}>
               <NavLink
                 to={item.path}
+                end={item.path === '/dashboard'}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive 

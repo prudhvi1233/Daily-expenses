@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import api from '../services/api';
+import { AuthContext } from './AuthContext';
 
 export const ExpenseContext = createContext();
 
@@ -7,25 +8,39 @@ export const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext);
 
   // Fetch all expenses
   const fetchExpenses = async (filters = {}) => {
+    if (!user) return;
     try {
       setLoading(true);
       const params = new URLSearchParams(filters).toString();
       const res = await api.get(`/expenses?${params}`);
-      setExpenses(res.data);
+      console.log("API Response:", res.data);
+      if (Array.isArray(res.data)) {
+        setExpenses(res.data);
+      } else {
+        setExpenses([]);
+        console.error("Expenses API did not return an array");
+      }
       setError(null);
     } catch (err) {
       setError(err.response?.data?.message || 'Error fetching expenses');
+      setExpenses([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchExpenses();
-  }, []);
+    if (user) {
+      fetchExpenses();
+    } else {
+      setExpenses([]);
+      setLoading(false);
+    }
+  }, [user]);
 
   const addExpense = async (expenseData) => {
     try {
