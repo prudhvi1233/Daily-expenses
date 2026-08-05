@@ -8,7 +8,7 @@ export const calculateSummaries = (expenses) => {
     const amount = exp.amount;
 
     if (isToday(date)) today += amount;
-    if (isThisWeek(date)) week += amount;
+    if (isThisWeek(date, { weekStartsOn: 1 })) week += amount;
     if (isThisMonth(date)) month += amount;
     if (isThisYear(date)) year += amount;
   });

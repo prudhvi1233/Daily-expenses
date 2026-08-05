@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { TaskContext } from '../context/TaskContext';
 import { MdEdit, MdDelete, MdCheckCircle, MdRadioButtonUnchecked } from 'react-icons/md';
 import { formatTime12Hour } from '../utils/formatTime';
+import ConfirmModal from './ConfirmModal';
 
 const priorityColors = {
   High: 'text-red-400 bg-red-500/10 border-red-500/20',
@@ -11,6 +12,7 @@ const priorityColors = {
 
 const TaskList = ({ tasks, onEdit }) => {
   const { updateTask, deleteTask } = useContext(TaskContext);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const toggleComplete = async (task) => {
     try {
@@ -20,13 +22,14 @@ const TaskList = ({ tasks, onEdit }) => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
+  const confirmDelete = async () => {
+    if (itemToDelete) {
       try {
-        await deleteTask(id);
+        await deleteTask(itemToDelete);
       } catch (error) {
         console.error(error);
       }
+      setItemToDelete(null);
     }
   };
 
@@ -77,7 +80,7 @@ const TaskList = ({ tasks, onEdit }) => {
                 <MdEdit size={18} />
               </button>
               <button 
-                onClick={() => handleDelete(task._id)}
+                onClick={() => setItemToDelete(task._id)}
                 className="p-2 text-slate-600 hover:text-red-600 bg-black/5 hover:bg-black/10 dark:text-slate-400 dark:hover:text-red-400 dark:bg-slate-900/50 dark:hover:bg-slate-900 rounded-lg transition-colors"
               >
                 <MdDelete size={18} />
@@ -86,6 +89,13 @@ const TaskList = ({ tasks, onEdit }) => {
           </div>
         </div>
       ))}
+      <ConfirmModal 
+        isOpen={!!itemToDelete}
+        onClose={() => setItemToDelete(null)}
+        onConfirm={confirmDelete}
+        title="Delete Task"
+        message="Are you sure you want to delete this task? This action cannot be undone."
+      />
     </div>
   );
 };

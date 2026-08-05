@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format } from 'date-fns';
+import ClockTimePicker from './ClockTimePicker';
 
 const ExpenseForm = ({ expense, onClose, defaultDate }) => {
   const { addExpense, updateExpense } = useContext(ExpenseContext);
   const [submitting, setSubmitting] = useState(false);
   
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, control, formState: { errors } } = useForm({
     defaultValues: expense ? {
       ...expense,
       date: format(new Date(expense.date), 'yyyy-MM-dd')
@@ -95,10 +96,16 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Time</label>
-            <input 
-              type="time"
-              className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
-              {...register('time', { required: true })}
+            <Controller
+              control={control}
+              name="time"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <ClockTimePicker
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
             />
           </div>
         </div>

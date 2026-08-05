@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format } from 'date-fns';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { formatTime12Hour } from '../utils/formatTime';
+import ConfirmModal from './ConfirmModal';
 
 const TransactionTable = ({ expenses, onEdit }) => {
   const { loading, deleteExpense } = useContext(ExpenseContext);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   if (loading) return <div className="text-center py-10 text-slate-500 dark:text-slate-400 animate-pulse">Loading transactions...</div>;
   if (expenses.length === 0) return <div className="text-center py-10 text-slate-500 dark:text-slate-400">No transactions found matching your filters.</div>;
@@ -27,7 +29,7 @@ const TransactionTable = ({ expenses, onEdit }) => {
           {expenses.map((expense) => (
             <tr key={expense._id} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
               <td className="p-4">
-                <div className="font-medium text-slate-800 dark:text-slate-200">{format(new Date(expense.date), 'MMM dd, yyyy')}</div>
+                <div className="font-medium text-slate-800 dark:text-slate-200">{format(new Date(expense.date), 'EEE, MMM dd, yyyy')}</div>
                 <div className="text-xs text-slate-500 dark:text-slate-400">{formatTime12Hour(expense.time)}</div>
               </td>
               <td className="p-4 text-slate-700 dark:text-slate-300 font-medium">{expense.description}</td>
@@ -49,11 +51,7 @@ const TransactionTable = ({ expenses, onEdit }) => {
                     <MdEdit size={18} />
                   </button>
                   <button 
-                    onClick={() => {
-                      if(window.confirm('Are you sure you want to delete this expense?')) {
-                        deleteExpense(expense._id);
-                      }
-                    }}
+                    onClick={() => setItemToDelete(expense._id)}
                     className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-500/10 dark:text-slate-400 dark:hover:text-red-400 rounded-lg transition-all"
                   >
                     <MdDelete size={18} />
@@ -64,6 +62,16 @@ const TransactionTable = ({ expenses, onEdit }) => {
           ))}
         </tbody>
       </table>
+
+      <ConfirmModal 
+        isOpen={!!itemToDelete}
+        onClose={() => setItemToDelete(null)}
+        onConfirm={() => {
+          if (itemToDelete) deleteExpense(itemToDelete);
+        }}
+        title="Delete Expense"
+        message="Are you sure you want to delete this expense? This action cannot be undone."
+      />
     </div>
   );
 };
