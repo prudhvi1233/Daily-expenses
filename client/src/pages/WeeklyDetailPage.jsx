@@ -113,36 +113,30 @@ const WeeklyDetailPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="lg:col-span-1 glass-panel p-6">
+      <div className="max-w-3xl mx-auto mb-8">
+        <div className="glass-panel p-6">
           <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6">Daily Breakdown</h2>
           <div className="space-y-4">
             {dailySubtotals.map(day => (
-              <div key={day.dateStr} className="flex justify-between items-center p-3 rounded-lg bg-black/5 dark:bg-black/20 border border-black/10 dark:border-white/10">
+              <div 
+                key={day.dateStr} 
+                onClick={() => navigate(`/dashboard/calendar/${day.dateStr}`)}
+                className="flex justify-between items-center p-4 rounded-lg bg-black/5 dark:bg-black/20 border border-black/10 dark:border-white/10 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+              >
                 <div>
                   <p className="text-slate-800 dark:text-slate-200 font-medium">{day.dayName}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{format(day.date, 'MMM d')}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{format(day.date, 'MMM d')}</p>
                 </div>
-                <div className={`font-bold ${day.amount > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-500'}`}>
-                  ₹{day.amount.toFixed(2)}
+                <div className="flex items-center gap-4">
+                  <span className={`font-bold text-lg ${day.amount > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-500'}`}>
+                    ₹{day.amount.toFixed(2)}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-slate-400">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </div>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-        
-        <div className="lg:col-span-2 glass-panel overflow-hidden flex flex-col">
-          <div className="p-6 border-b border-black/10 dark:border-white/10">
-            <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">All Transactions</h2>
-          </div>
-          <div className="p-6 flex-1 overflow-auto">
-            {weekExpenses.length > 0 ? (
-              <TransactionTable expenses={weekExpenses} onEdit={handleEdit} />
-            ) : (
-              <div className="text-center py-12 text-slate-500 dark:text-slate-400">
-                No expenses recorded for this week.
-              </div>
-            )}
           </div>
         </div>
       </div>

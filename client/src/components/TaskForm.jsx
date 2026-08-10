@@ -12,8 +12,7 @@ const TaskForm = ({ task, onClose, defaultDay }) => {
       dayOfWeek: defaultDay || 'Monday',
       time: '09:00',
       title: '',
-      description: '',
-      priority: 'Medium'
+      description: ''
     }
   });
 
@@ -83,23 +82,6 @@ const TaskForm = ({ task, onClose, defaultDay }) => {
             className="w-full bg-black/5 dark:bg-slate-900 border border-black/10 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 transition-all outline-none"
             {...register('description')}
           ></textarea>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Priority</label>
-          <div className="flex gap-4">
-            {['Low', 'Medium', 'High'].map(level => (
-              <label key={level} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 cursor-pointer">
-                <input 
-                  type="radio" 
-                  value={level} 
-                  {...register('priority')} 
-                  className="w-4 h-4 text-blue-500 bg-black/5 dark:bg-slate-900 border-black/10 dark:border-slate-700 focus:ring-blue-500"
-                />
-                {level}
-              </label>
-            ))}
-          </div>
         </div>
 
         <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-black/10 dark:border-slate-700">

@@ -36,8 +36,8 @@ const CalendarPage = () => {
 
   const getColorClass = (amount) => {
     if (!amount) return 'bg-black/5 dark:bg-black/20 hover:bg-black/10 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300';
-    if (amount < 500) return 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30';
-    if (amount < 2000) return 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30';
+    if (amount < 100) return 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30';
+    if (amount <= 250) return 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30';
     return 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30';
   };
 
@@ -46,6 +46,12 @@ const CalendarPage = () => {
     const end = endOfMonth(monthDate);
     const days = eachDayOfInterval({ start, end });
     const startDayOfWeek = getDay(start); // 0 = Sunday
+
+    // Calculate monthly total
+    const monthTotal = days.reduce((sum, day) => {
+      const dateStr = format(day, 'yyyy-MM-dd');
+      return sum + (dailyTotals[dateStr] || 0);
+    }, 0);
 
     // Pad beginning of month
     const padding = Array(startDayOfWeek).fill(null);
@@ -57,7 +63,14 @@ const CalendarPage = () => {
         ref={isCurrentMonth ? currentMonthRef : null}
         className={`glass-panel p-4 transition-colors ${isCurrentMonth ? 'border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.15)] bg-blue-500/5' : 'hover:border-black/20 dark:hover:border-white/20'}`}
       >
-        <h3 className={`text-lg font-bold mb-3 text-center ${isCurrentMonth ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>{format(monthDate, 'MMMM')}</h3>
+        <div className="mb-3 text-center">
+          <h3 className={`text-lg font-bold ${isCurrentMonth ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>
+            {format(monthDate, 'MMMM')}
+          </h3>
+          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+            Total: ₹{monthTotal.toFixed(2)}
+          </p>
+        </div>
         <div className="grid grid-cols-7 gap-1 mb-2 text-center text-xs text-slate-600 dark:text-slate-500 font-medium">
           {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(d => <div key={d}>{d}</div>)}
         </div>
@@ -100,9 +113,9 @@ const CalendarPage = () => {
       
       <div className="mt-8 p-4 glass-panel flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-slate-600 dark:text-slate-400">
         <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-black/5 dark:bg-black/20 border border-black/10 dark:border-white/10"></div> No Expenses</div>
-        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-emerald-500/20 border border-emerald-500/30"></div> &lt; ₹500</div>
-        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-amber-500/20 border border-amber-500/30"></div> ₹500 - ₹2000</div>
-        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-red-500/20 border border-red-500/30"></div> &gt; ₹2000</div>
+        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-emerald-500/20 border border-emerald-500/30"></div> &lt; ₹100</div>
+        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-amber-500/20 border border-amber-500/30"></div> ₹100 - ₹250</div>
+        <div className="flex items-center gap-2"><div className="w-4 h-4 rounded bg-red-500/20 border border-red-500/30"></div> &gt; ₹250</div>
       </div>
     </div>
   );

@@ -6,13 +6,13 @@ import { AuthContext } from '../../context/AuthContext';
 const Sidebar = ({ isOpen, onClose }) => {
   const { logout } = useContext(AuthContext);
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-5 h-5" /> },
-    { name: 'Planner', path: '/dashboard/planner', icon: <MdEventAvailable className="w-5 h-5" /> },
-    { name: 'Transactions', path: '/dashboard/transactions', icon: <MdList className="w-5 h-5" /> },
-    { name: 'Calendar', path: '/dashboard/calendar', icon: <MdCalendarToday className="w-5 h-5" /> },
-    { name: 'Weekly Summary', path: '/dashboard/weekly', icon: <MdViewWeek className="w-5 h-5" /> },
-    { name: 'Analytics', path: '/dashboard/analytics', icon: <MdAnalytics className="w-5 h-5" /> },
-    { name: 'Profile', path: '/dashboard/profile', icon: <MdPerson className="w-5 h-5" /> }
+    { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Planner', path: '/dashboard/planner', icon: <MdEventAvailable className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Transactions', path: '/dashboard/transactions', icon: <MdList className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Calendar', path: '/dashboard/calendar', icon: <MdCalendarToday className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Weekly Summary', path: '/dashboard/weekly', icon: <MdViewWeek className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Analytics', path: '/dashboard/analytics', icon: <MdAnalytics className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Profile', path: '/dashboard/profile', icon: <MdPerson className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> }
   ];
 
   return (
@@ -39,10 +39,10 @@ const Sidebar = ({ isOpen, onClose }) => {
                 to={item.path}
                 end={item.path === '/dashboard'}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                  `group flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 ${
                     isActive 
-                    ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)] backdrop-blur-md dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/20 dark:shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-black/5 dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5'
+                    ? 'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 font-semibold shadow-[inset_4px_0_0_0_rgba(59,130,246,1)] dark:shadow-[inset_4px_0_0_0_rgba(96,165,250,1)]' 
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-white/5 font-medium'
                   }`
                 }
               >

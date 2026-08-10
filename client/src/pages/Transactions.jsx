@@ -5,6 +5,7 @@ import FilterBar from '../components/FilterBar';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { isToday, isYesterday, subDays, isThisMonth, isThisYear, isAfter } from 'date-fns';
 import { exportToCSV, exportToExcel, exportToPDF } from '../utils/exportUtils';
+import { MdDownload, MdPictureAsPdf, MdGridOn } from 'react-icons/md';
 
 const Transactions = () => {
   const { expenses } = useContext(ExpenseContext);
@@ -59,14 +60,33 @@ const Transactions = () => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Transactions</h1>
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex glass-panel overflow-hidden shadow-sm">
-            <button onClick={() => exportToCSV(filteredExpenses)} className="px-3 py-2 text-sm text-slate-600 hover:bg-black/10 dark:text-slate-300 dark:hover:bg-white/10 transition-colors border-r border-black/10 dark:border-white/10">CSV</button>
-            <button onClick={() => exportToExcel(filteredExpenses)} className="px-3 py-2 text-sm text-slate-600 hover:bg-black/10 dark:text-slate-300 dark:hover:bg-white/10 transition-colors border-r border-black/10 dark:border-white/10">Excel</button>
-            <button onClick={() => exportToPDF(filteredExpenses)} className="px-3 py-2 text-sm text-slate-600 hover:bg-black/10 dark:text-slate-300 dark:hover:bg-white/10 transition-colors flex items-center gap-1">PDF</button>
-          </div>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Transactions</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Track and manage all your expenses in one place</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <button 
+            onClick={() => exportToCSV(filteredExpenses)} 
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:text-blue-600 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-blue-400 shadow-sm"
+            title="Export to CSV"
+          >
+            <MdDownload size={16} /> <span className="hidden sm:inline">CSV</span>
+          </button>
+          <button 
+            onClick={() => exportToExcel(filteredExpenses)} 
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:text-green-600 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-green-400 shadow-sm"
+            title="Export to Excel"
+          >
+            <MdGridOn size={16} /> <span className="hidden sm:inline">Excel</span>
+          </button>
+          <button 
+            onClick={() => exportToPDF(filteredExpenses)} 
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:text-red-600 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-red-400 shadow-sm"
+            title="Export to PDF"
+          >
+            <MdPictureAsPdf size={16} /> <span className="hidden sm:inline">PDF</span>
+          </button>
         </div>
       </div>
 

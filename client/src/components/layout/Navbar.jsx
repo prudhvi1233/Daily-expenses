@@ -27,8 +27,9 @@ const Navbar = ({ onMenuClick }) => {
             ExpenseTracker
           </h2>
         </div>
-        <div className="hidden md:block">
-          <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Welcome Back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}!</h2>
+        <div className="hidden md:flex flex-col">
+          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 leading-tight">Welcome Back{user?.name ? `, ${user.name.split(' ')[0]}` : ''}</h2>
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Here's your financial overview</span>
         </div>
         <div className="flex items-center gap-4">
           <button 

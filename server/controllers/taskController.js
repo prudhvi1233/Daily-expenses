@@ -5,11 +5,30 @@ const Task = require('../models/Task');
 // @access  Private
 const getTasks = async (req, res) => {
   try {
+    // Check for weekly reset (assuming week starts on Monday)
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), diff);
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    // Reset tasks completed in previous weeks
+    await Task.updateMany(
+      { 
+        user: req.user.id, 
+        completed: true, 
+        lastCompletedAt: { $lt: startOfWeek, $ne: null } 
+      },
+      { 
+        $set: { completed: false, lastCompletedAt: null } 
+      }
+    );
+
     const tasks = await Task.find({ user: req.user.id }).sort({ time: 1 });
     res.status(200).json(tasks);
   } catch (error) {
-    res.status(500);
-    throw new Error('Server Error');
+    console.error("GET TASKS ERROR:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -57,6 +76,12 @@ const updateTask = async (req, res) => {
     if (task.user.toString() !== req.user.id) {
       res.status(401);
       throw new Error('User not authorized');
+    }
+
+    if (req.body.completed === true) {
+      req.body.lastCompletedAt = new Date();
+    } else if (req.body.completed === false) {
+      req.body.lastCompletedAt = null;
     }
 
     const updatedTask = await Task.findByIdAndUpdate(

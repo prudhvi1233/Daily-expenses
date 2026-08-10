@@ -4,11 +4,7 @@ import { MdEdit, MdDelete, MdCheckCircle, MdRadioButtonUnchecked } from 'react-i
 import { formatTime12Hour } from '../utils/formatTime';
 import ConfirmModal from './ConfirmModal';
 
-const priorityColors = {
-  High: 'text-red-400 bg-red-500/10 border-red-500/20',
-  Medium: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-  Low: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
-};
+
 
 const TaskList = ({ tasks, onEdit }) => {
   const { updateTask, deleteTask } = useContext(TaskContext);
@@ -42,7 +38,7 @@ const TaskList = ({ tasks, onEdit }) => {
       {tasks.map(task => (
         <div 
           key={task._id} 
-          className={`group flex items-center gap-4 p-4 rounded-xl border transition-all ${
+          className={`group flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border transition-all ${
             task.completed 
             ? 'bg-black/5 dark:bg-black/20 border-black/5 dark:border-white/5 opacity-60' 
             : 'bg-white/50 dark:bg-black/40 border-black/10 hover:border-black/20 dark:border-white/10 dark:hover:border-white/20 shadow-sm hover:shadow-md'
@@ -55,7 +51,7 @@ const TaskList = ({ tasks, onEdit }) => {
             {task.completed ? <MdCheckCircle size={28} /> : <MdRadioButtonUnchecked size={28} />}
           </button>
           
-          <div className="w-20 flex-shrink-0 text-slate-600 dark:text-slate-400 font-medium text-sm">
+          <div className="w-16 sm:w-20 flex-shrink-0 text-slate-600 dark:text-slate-400 font-medium text-sm">
             {formatTime12Hour(task.time)}
           </div>
 
@@ -68,11 +64,8 @@ const TaskList = ({ tasks, onEdit }) => {
             )}
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className={`text-xs px-2 py-1 rounded-md border font-medium hidden sm:block ${priorityColors[task.priority]}`}>
-              {task.priority}
-            </span>
-            <div className="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center ml-auto">
+            <div className="flex gap-1 sm:gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
               <button 
                 onClick={() => onEdit(task)}
                 className="p-2 text-slate-600 hover:text-blue-600 bg-black/5 hover:bg-black/10 dark:text-slate-400 dark:hover:text-blue-400 dark:bg-slate-900/50 dark:hover:bg-slate-900 rounded-lg transition-colors"
