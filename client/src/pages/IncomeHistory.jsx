@@ -1,13 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExpenseContext } from '../context/ExpenseContext';
-import { MdArrowBack, MdArrowUpward, MdAccountBalanceWallet } from 'react-icons/md';
+import { MdArrowBack, MdArrowUpward, MdAccountBalanceWallet, MdEdit, MdDelete } from 'react-icons/md';
 import { format } from 'date-fns';
 import { formatTime12Hour } from '../utils/formatTime';
+import ConfirmModal from '../components/ConfirmModal';
+import AddMoneyModal from '../components/AddMoneyModal';
 
 const IncomeHistory = () => {
-  const { expenses, loading } = useContext(ExpenseContext);
+  const { expenses, loading, deleteExpense } = useContext(ExpenseContext);
   const navigate = useNavigate();
+  
+  const [editingIncome, setEditingIncome] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const incomeTransactions = expenses.filter(t => t.type === 'income');
 
@@ -62,15 +67,48 @@ const IncomeHistory = () => {
                   </div>
                 </div>
                 <div className="flex-shrink-0 text-right ml-4">
-                  <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                  <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
                     +₹{tx.amount.toFixed(2)}
                   </p>
+                  <div className="flex items-center justify-end gap-1">
+                    <button 
+                      onClick={() => setEditingIncome(tx)}
+                      className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"
+                      title="Edit"
+                    >
+                      <MdEdit size={18} />
+                    </button>
+                    <button 
+                      onClick={() => setItemToDelete(tx._id)}
+                      className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                      title="Delete"
+                    >
+                      <MdDelete size={18} />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {editingIncome && (
+        <AddMoneyModal 
+          income={editingIncome} 
+          onClose={() => setEditingIncome(null)} 
+        />
+      )}
+
+      <ConfirmModal 
+        isOpen={!!itemToDelete}
+        onClose={() => setItemToDelete(null)}
+        onConfirm={() => {
+          if (itemToDelete) deleteExpense(itemToDelete);
+        }}
+        title="Delete Added Money"
+        message="Are you sure you want to delete this record? This will reduce your wallet balance by this amount."
+      />
     </div>
   );
 };

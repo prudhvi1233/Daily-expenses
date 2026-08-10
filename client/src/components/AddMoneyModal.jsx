@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { MdClose } from 'react-icons/md';
 
-const AddMoneyModal = ({ onClose }) => {
-  const { addExpense } = useContext(ExpenseContext);
-  const [amount, setAmount] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Salary');
+const AddMoneyModal = ({ onClose, income = null }) => {
+  const { addExpense, updateExpense } = useContext(ExpenseContext);
+  const [amount, setAmount] = useState(income ? income.amount : '');
+  const [description, setDescription] = useState(income ? income.description : '');
+  const [category, setCategory] = useState(income ? income.category : 'Salary');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -21,19 +21,31 @@ const AddMoneyModal = ({ onClose }) => {
       setLoading(true);
       setError('');
       
-      const date = new Date();
-      const dateStr = date.toISOString().split('T')[0];
-      const timeStr = date.toTimeString().split(' ')[0].substring(0, 5);
+      if (income) {
+        await updateExpense(income._id, {
+          type: 'income',
+          amount: Number(amount),
+          description,
+          category,
+          date: income.date,
+          time: income.time,
+          paymentMethod: income.paymentMethod
+        });
+      } else {
+        const date = new Date();
+        const dateStr = date.toISOString().split('T')[0];
+        const timeStr = date.toTimeString().split(' ')[0].substring(0, 5);
 
-      await addExpense({
-        type: 'income',
-        amount: Number(amount),
-        description,
-        category,
-        date: dateStr,
-        time: timeStr,
-        paymentMethod: 'Net Banking'
-      });
+        await addExpense({
+          type: 'income',
+          amount: Number(amount),
+          description,
+          category,
+          date: dateStr,
+          time: timeStr,
+          paymentMethod: 'Net Banking'
+        });
+      }
       
       onClose();
     } catch (err) {
@@ -55,7 +67,7 @@ const AddMoneyModal = ({ onClose }) => {
           <MdClose size={24} />
         </button>
 
-        <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white">Add Money</h2>
+        <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white">{income ? 'Edit Money Added' : 'Add Money'}</h2>
         
         {error && <div className="mb-4 p-3 bg-red-100/50 dark:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg text-sm">{error}</div>}
 
@@ -111,7 +123,7 @@ const AddMoneyModal = ({ onClose }) => {
               disabled={loading}
               className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-colors shadow-lg shadow-blue-500/20 disabled:opacity-50"
             >
-              {loading ? 'Adding...' : 'Add Money'}
+              {loading ? (income ? 'Updating...' : 'Adding...') : (income ? 'Update' : 'Add Money')}
             </button>
           </div>
         </form>
