@@ -66,8 +66,8 @@ const TransactionTable = ({ expenses, onEdit }) => {
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-slate-900 dark:text-slate-100">
-                  ₹{expense.amount.toFixed(2)}
+                <div className={`font-bold ${expense.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-slate-100'}`}>
+                  {expense.type === 'income' ? '+' : '-'}₹{expense.amount.toFixed(2)}
                 </div>
               </div>
             </div>
@@ -128,8 +128,8 @@ const TransactionTable = ({ expenses, onEdit }) => {
                 <td className="p-4">
                   <span className="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">{expense.paymentMethod}</span>
                 </td>
-                <td className="p-4 text-right font-bold text-slate-900 dark:text-slate-100">
-                  ₹{expense.amount.toFixed(2)}
+                <td className={`p-4 text-right font-bold ${expense.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-slate-100'}`}>
+                  {expense.type === 'income' ? '+' : '-'}₹{expense.amount.toFixed(2)}
                 </td>
                 <td className="p-4 pr-6">
                   <div className="flex justify-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">

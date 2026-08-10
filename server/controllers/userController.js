@@ -29,6 +29,7 @@ const registerUser = async (req, res, next) => {
         _id: user.id,
         name: user.name,
         email: user.email,
+        walletBalance: user.walletBalance,
         token: generateToken(user._id)
       });
     } else {
@@ -54,6 +55,7 @@ const loginUser = async (req, res, next) => {
         _id: user.id,
         name: user.name,
         email: user.email,
+        walletBalance: user.walletBalance,
         token: generateToken(user._id)
       });
     } else {
@@ -70,7 +72,12 @@ const loginUser = async (req, res, next) => {
 // @access  Private
 const getMe = async (req, res, next) => {
   try {
-    res.status(200).json(req.user);
+    res.status(200).json({
+      _id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      walletBalance: req.user.walletBalance,
+    });
   } catch (error) {
     next(error);
   }

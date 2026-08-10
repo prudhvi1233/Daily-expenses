@@ -27,7 +27,8 @@ const CalendarPage = () => {
   // Pre-calculate daily totals
   const dailyTotals = useMemo(() => {
     const totals = {};
-    expenses.forEach(exp => {
+    const onlyExpenses = expenses.filter(e => !e.type || e.type === 'expense');
+    onlyExpenses.forEach(exp => {
       const dateStr = format(new Date(exp.date), 'yyyy-MM-dd');
       totals[dateStr] = (totals[dateStr] || 0) + exp.amount;
     });

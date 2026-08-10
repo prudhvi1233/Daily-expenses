@@ -8,7 +8,7 @@ export const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useContext(AuthContext);
+  const { user, updateUser } = useContext(AuthContext);
 
   // Fetch all expenses
   const fetchExpenses = async (filters = {}) => {
@@ -45,8 +45,11 @@ export const ExpenseProvider = ({ children }) => {
   const addExpense = async (expenseData) => {
     try {
       const res = await api.post('/expenses', expenseData);
-      setExpenses(prev => [res.data, ...prev]);
-      return res.data;
+      setExpenses(prev => [res.data.expense, ...prev]);
+      if (res.data.walletBalance !== undefined) {
+        updateUser({ walletBalance: res.data.walletBalance });
+      }
+      return res.data.expense;
     } catch (err) {
       throw new Error(err.response?.data?.message || 'Error adding expense');
     }
@@ -55,8 +58,11 @@ export const ExpenseProvider = ({ children }) => {
   const updateExpense = async (id, expenseData) => {
     try {
       const res = await api.put(`/expenses/${id}`, expenseData);
-      setExpenses(prev => prev.map(exp => exp._id === id ? res.data : exp));
-      return res.data;
+      setExpenses(prev => prev.map(exp => exp._id === id ? res.data.expense : exp));
+      if (res.data.walletBalance !== undefined) {
+        updateUser({ walletBalance: res.data.walletBalance });
+      }
+      return res.data.expense;
     } catch (err) {
       throw new Error(err.response?.data?.message || 'Error updating expense');
     }
@@ -64,8 +70,11 @@ export const ExpenseProvider = ({ children }) => {
 
   const deleteExpense = async (id) => {
     try {
-      await api.delete(`/expenses/${id}`);
+      const res = await api.delete(`/expenses/${id}`);
       setExpenses(prev => prev.filter(exp => exp._id !== id));
+      if (res.data.walletBalance !== undefined) {
+        updateUser({ walletBalance: res.data.walletBalance });
+      }
     } catch (err) {
       throw new Error(err.response?.data?.message || 'Error deleting expense');
     }

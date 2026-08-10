@@ -13,15 +13,16 @@ const Analytics = () => {
   const { expenses, loading } = useContext(ExpenseContext);
 
   const stats = useMemo(() => {
-    if (expenses.length === 0) return null;
+    const onlyExpenses = expenses.filter(e => !e.type || e.type === 'expense');
+    if (onlyExpenses.length === 0) return null;
 
     let total = 0;
     const catMap = {}; // amount per category
     
-    let minDate = new Date(expenses[0].date);
-    let maxDate = new Date(expenses[0].date);
+    let minDate = new Date(onlyExpenses[0].date);
+    let maxDate = new Date(onlyExpenses[0].date);
 
-    expenses.forEach(exp => {
+    onlyExpenses.forEach(exp => {
       total += exp.amount;
       catMap[exp.category] = (catMap[exp.category] || 0) + exp.amount;
       

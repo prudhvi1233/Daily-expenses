@@ -11,10 +11,14 @@ const expenseSchema = new mongoose.Schema({
     required: [true, 'Please add an amount'],
     min: [0.01, 'Amount must be greater than zero']
   },
+  type: {
+    type: String,
+    enum: ['expense', 'income'],
+    default: 'expense'
+  },
   category: {
     type: String,
     required: [true, 'Please add a category'],
-    enum: ['Food', 'Travel', 'Shopping', 'Medical', 'Education', 'Entertainment', 'Recharge', 'Bills', 'Home', 'Fuel', 'Others']
   },
   description: {
     type: String,
@@ -23,8 +27,9 @@ const expenseSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    required: [true, 'Please select a payment method'],
-    enum: ['Cash', 'UPI', 'Credit Card', 'Debit Card', 'Net Banking']
+    required: function() {
+      return this.type === 'expense';
+    }
   },
   date: {
     type: Date,

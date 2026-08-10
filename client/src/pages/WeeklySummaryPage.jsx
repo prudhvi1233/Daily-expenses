@@ -32,6 +32,8 @@ const WeeklySummaryPage = () => {
     weeks.forEach((weekStart, index) => {
       const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
       const weekExpenses = expenses.filter(exp => {
+        const isExpense = !exp.type || exp.type === 'expense';
+        if (!isExpense) return false;
         const expDate = parseISO(exp.date);
         return expDate >= weekStart && expDate <= weekEnd;
       });

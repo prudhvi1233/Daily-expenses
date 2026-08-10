@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdDashboard, MdList, MdAnalytics, MdLogout, MdSavings, MdCalendarToday, MdViewWeek, MdEventAvailable, MdPerson } from 'react-icons/md';
+import { MdDashboard, MdList, MdAnalytics, MdLogout, MdSavings, MdCalendarToday, MdViewWeek, MdEventAvailable, MdPerson, MdAccountBalanceWallet } from 'react-icons/md';
 import { AuthContext } from '../../context/AuthContext';
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -8,6 +8,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
     { name: 'Planner', path: '/dashboard/planner', icon: <MdEventAvailable className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
+    { name: 'Wallet', path: '/dashboard/wallet', icon: <MdAccountBalanceWallet className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
     { name: 'Transactions', path: '/dashboard/transactions', icon: <MdList className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
     { name: 'Calendar', path: '/dashboard/calendar', icon: <MdCalendarToday className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },
     { name: 'Weekly Summary', path: '/dashboard/weekly', icon: <MdViewWeek className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" /> },

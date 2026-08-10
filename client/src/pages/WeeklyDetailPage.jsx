@@ -31,6 +31,8 @@ const WeeklyDetailPage = () => {
     
     const { weekStart, weekEnd } = weekInfo;
     const filtered = expenses.filter(exp => {
+      const isExpense = !exp.type || exp.type === 'expense';
+      if (!isExpense) return false;
       const d = parseISO(exp.date);
       return d >= weekStart && d <= weekEnd;
     });

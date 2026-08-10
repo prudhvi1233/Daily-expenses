@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { format } from 'date-fns';
 import { formatTime12Hour } from './formatTime';
@@ -21,7 +21,7 @@ export const exportToPDF = (expenses) => {
   const doc = new jsPDF();
   doc.text("Personal Expense Tracker - Transactions", 14, 15);
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: 20,
     head: [getColumns()],
     body: getTableData(expenses),

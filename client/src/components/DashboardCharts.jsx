@@ -21,13 +21,15 @@ const DashboardCharts = () => {
 
   const categoryData = useMemo(() => {
     const map = {};
-    expenses.forEach(exp => {
+    const onlyExpenses = expenses.filter(e => !e.type || e.type === 'expense');
+    onlyExpenses.forEach(exp => {
       map[exp.category] = (map[exp.category] || 0) + exp.amount;
     });
     return Object.keys(map).map(key => ({ name: key, value: map[key] })).sort((a,b) => b.value - a.value);
   }, [expenses]);
 
-  if (expenses.length === 0) return null;
+  const hasExpenses = expenses.some(e => !e.type || e.type === 'expense');
+  if (!hasExpenses) return null;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
