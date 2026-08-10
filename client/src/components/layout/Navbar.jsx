@@ -23,7 +23,7 @@ const Navbar = ({ onMenuClick }) => {
           <button onClick={onMenuClick} className="text-slate-800 dark:text-slate-200 p-2 -ml-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
             <MdMenu size={24} />
           </button>
-          <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
+          <h2 className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-slate-100 truncate max-w-[150px] xs:max-w-none">
             ExpenseTracker
           </h2>
         </div>

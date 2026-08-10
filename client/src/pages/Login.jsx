@@ -28,7 +28,7 @@ const Login = () => {
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
-        className="auth-glass p-8"
+        className="auth-glass p-6 sm:p-8 w-[95%] sm:w-full"
       >
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Welcome Back</h2>
         <p className="text-slate-600 dark:text-slate-400 mb-8 text-sm font-medium">Sign in to continue to your dashboard.</p>

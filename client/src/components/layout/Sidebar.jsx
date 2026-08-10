@@ -38,6 +38,9 @@ const Sidebar = ({ isOpen, onClose }) => {
               <NavLink
                 to={item.path}
                 end={item.path === '/dashboard'}
+                onClick={() => {
+                  if (window.innerWidth < 768) onClose();
+                }}
                 className={({ isActive }) =>
                   `group flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 ${
                     isActive 

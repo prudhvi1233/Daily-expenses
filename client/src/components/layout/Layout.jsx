@@ -14,7 +14,7 @@ const Layout = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex h-screen bg-transparent overflow-hidden relative">
+    <div className="flex h-screen bg-transparent overflow-hidden relative max-w-[100vw]">
       {/* Global Watermark */}
       <div className="fixed bottom-6 right-6 pointer-events-none z-50 opacity-30 select-none">
         <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap tracking-wider">
@@ -25,7 +25,7 @@ const Layout = () => {
       <Sidebar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
       <div className="flex-1 flex flex-col md:ml-64 relative w-full">
         <Navbar onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-8">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-5 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

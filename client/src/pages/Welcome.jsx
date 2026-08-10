@@ -90,7 +90,7 @@ const Welcome = () => {
             <span className="text-sm font-medium text-slate-800 dark:text-slate-300">Your Ultimate Finance Workspace</span>
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-6 leading-[1.1]">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tight mb-6 leading-[1.1]">
             <span className="text-slate-900 dark:text-white block">Take Control of Your</span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 dark:from-blue-400 dark:via-cyan-300 dark:to-blue-400 drop-shadow-sm pb-2">
               Daily Expenses

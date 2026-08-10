@@ -37,7 +37,7 @@ const TaskForm = ({ task, onClose, defaultDay }) => {
       <h2 className="text-2xl font-bold mb-4 text-slate-800 dark:text-white">{task ? 'Edit Task' : 'Add Task'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Day</label>
             <select 
