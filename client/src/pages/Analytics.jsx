@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import { ExpenseContext } from '../context/ExpenseContext';
+import { differenceInCalendarDays, differenceInCalendarWeeks } from 'date-fns';
 
 const StatCard = ({ title, value }) => (
   <div className="glass-panel p-6">
@@ -17,27 +18,25 @@ const Analytics = () => {
     let total = 0;
     const catMap = {}; // amount per category
     
-    // Find min and max dates to calculate accurate averages over time
-    let minDate = new Date(expenses[0].date).getTime();
-    let maxDate = new Date(expenses[0].date).getTime();
+    let minDate = new Date(expenses[0].date);
+    let maxDate = new Date(expenses[0].date);
 
     expenses.forEach(exp => {
       total += exp.amount;
       catMap[exp.category] = (catMap[exp.category] || 0) + exp.amount;
       
-      const expDate = new Date(exp.date).getTime();
+      const expDate = new Date(exp.date);
       if (expDate < minDate) minDate = expDate;
       if (expDate > maxDate) maxDate = expDate;
     });
 
-    // Calculate timespan in days (add 1 so a single day counts as 1 full day)
-    const msPerDay = 1000 * 60 * 60 * 24;
-    let days = (maxDate - minDate) / msPerDay + 1; 
+    const weeksSpan = differenceInCalendarWeeks(maxDate, minDate, { weekStartsOn: 1 }) + 1;
     
-    // Calculate averages based on total days tracked
-    const avgDaily = total / days;
-    const avgWeekly = avgDaily * 7;
-    const avgMonthly = avgDaily * 30.44; // average days in a month
+    // Calculate averages harmonized around the calendar weeks logic
+    // This prevents artificial inflation if a user only has a few transactions close together
+    const avgWeekly = total / Math.max(1, weeksSpan);
+    const avgDaily = avgWeekly / 7;
+    const avgMonthly = avgDaily * 30.44; // Standard month length
 
     // Sort category breakdown by highest spent first
     const categoryBreakdown = Object.entries(catMap)
