@@ -54,7 +54,7 @@ const PlannerPage = () => {
         ))}
       </div>
 
-      <div className="glass-panel p-6">
+      <div className="glass-panel p-4 sm:p-6">
         <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6">{activeTab}'s Schedule</h2>
         <TaskList tasks={activeTasks} onEdit={handleEdit} />
       </div>

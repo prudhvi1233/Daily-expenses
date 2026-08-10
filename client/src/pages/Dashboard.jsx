@@ -89,7 +89,7 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="mt-8 glass-panel p-6">
+      <div className="mt-8 glass-panel p-4 sm:p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
             <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1">Today's Planner</h2>

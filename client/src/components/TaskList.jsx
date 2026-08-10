@@ -38,7 +38,7 @@ const TaskList = ({ tasks, onEdit }) => {
       {tasks.map(task => (
         <div 
           key={task._id} 
-          className={`group flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border transition-all ${
+          className={`group flex items-center gap-2 sm:gap-4 p-2.5 sm:p-4 rounded-xl border transition-all ${
             task.completed 
             ? 'bg-black/5 dark:bg-black/20 border-black/5 dark:border-white/5 opacity-60' 
             : 'bg-white/50 dark:bg-black/40 border-black/10 hover:border-black/20 dark:border-white/10 dark:hover:border-white/20 shadow-sm hover:shadow-md'
@@ -51,7 +51,7 @@ const TaskList = ({ tasks, onEdit }) => {
             {task.completed ? <MdCheckCircle size={28} /> : <MdRadioButtonUnchecked size={28} />}
           </button>
           
-          <div className="w-16 sm:w-20 flex-shrink-0 text-slate-600 dark:text-slate-400 font-medium text-sm">
+          <div className="w-14 sm:w-20 flex-shrink-0 text-slate-600 dark:text-slate-400 font-medium text-xs sm:text-sm">
             {formatTime12Hour(task.time)}
           </div>
 
@@ -60,7 +60,7 @@ const TaskList = ({ tasks, onEdit }) => {
               {task.title}
             </h4>
             {task.description && (
-              <p className="text-sm text-slate-500 truncate">{task.description}</p>
+              <p className="text-xs sm:text-sm text-slate-500 truncate">{task.description}</p>
             )}
           </div>
 
