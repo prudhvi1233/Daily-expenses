@@ -16,7 +16,10 @@ const DailyExpensePage = () => {
   const parsedDate = parseISO(date);
 
   const dailyExpenses = useMemo(() => {
-    return expenses.filter(exp => format(new Date(exp.date), 'yyyy-MM-dd') === date);
+    return expenses.filter(exp => 
+      (!exp.type || exp.type === 'expense') && 
+      format(new Date(exp.date), 'yyyy-MM-dd') === date
+    );
   }, [expenses, date]);
 
   const summary = useMemo(() => {
