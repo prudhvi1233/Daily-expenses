@@ -21,6 +21,8 @@ const Transactions = () => {
 
   const filteredExpenses = useMemo(() => {
     return expenses.filter(exp => {
+      if (exp.type === 'other_deduction') return false;
+
       // 1. Search Filter
       const searchMatch = 
         exp.description.toLowerCase().includes(filters.search.toLowerCase()) || 

@@ -13,7 +13,7 @@ const expenseSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['expense', 'income'],
+    enum: ['expense', 'income', 'other_deduction'],
     default: 'expense'
   },
   category: {

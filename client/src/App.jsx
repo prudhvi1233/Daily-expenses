@@ -14,7 +14,7 @@ import WeeklySummaryPage from './pages/WeeklySummaryPage';
 import WeeklyDetailPage from './pages/WeeklyDetailPage';
 import PlannerPage from './pages/PlannerPage';
 import Wallet from './pages/Wallet';
-import IncomeHistory from './pages/IncomeHistory';
+import WalletHistory from './pages/WalletHistory';
 import ProfilePage from './pages/ProfilePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -54,7 +54,7 @@ function App() {
               <Route path="weekly/:year/:week" element={<WeeklyDetailPage />} />
               <Route path="planner" element={<PlannerPage />} />
               <Route path="wallet" element={<Wallet />} />
-              <Route path="wallet/income" element={<IncomeHistory />} />
+              <Route path="wallet/history" element={<WalletHistory />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="profile" element={<ProfilePage />} />
             </Route>

@@ -58,7 +58,7 @@ const createExpense = async (req, res, next) => {
       throw new Error('User not found');
     }
 
-    if (type === 'expense' && user.walletBalance < amount) {
+    if ((type === 'expense' || type === 'other_deduction') && user.walletBalance < amount) {
       res.status(400);
       throw new Error('Insufficient balance');
     }
@@ -75,7 +75,7 @@ const createExpense = async (req, res, next) => {
       notes
     });
 
-    const balanceChange = type === 'expense' ? -amount : amount;
+    const balanceChange = (type === 'expense' || type === 'other_deduction') ? -amount : amount;
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id, 
       { $inc: { walletBalance: balanceChange } }, 
@@ -113,11 +113,11 @@ const updateExpense = async (req, res, next) => {
     const newType = req.body.type || oldType;
 
     // Calculate effect on wallet
-    // Reverse old effect: if old was expense, we add oldAmount back. If old was income, subtract oldAmount.
-    const oldEffect = oldType === 'expense' ? oldAmount : -oldAmount;
+    // Reverse old effect: if old was expense/deduction, we add oldAmount back. If old was income, subtract oldAmount.
+    const oldEffect = (oldType === 'expense' || oldType === 'other_deduction') ? oldAmount : -oldAmount;
     
-    // Apply new effect: if new is expense, we subtract newAmount. If new is income, add newAmount.
-    const newEffect = newType === 'expense' ? -newAmount : newAmount;
+    // Apply new effect: if new is expense/deduction, we subtract newAmount. If new is income, add newAmount.
+    const newEffect = (newType === 'expense' || newType === 'other_deduction') ? -newAmount : newAmount;
     
     const balanceChange = oldEffect + newEffect;
 
@@ -166,7 +166,7 @@ const deleteExpense = async (req, res, next) => {
       throw new Error('User not authorized');
     }
 
-    const balanceChange = expense.type === 'expense' ? expense.amount : -expense.amount;
+    const balanceChange = (expense.type === 'expense' || expense.type === 'other_deduction') ? expense.amount : -expense.amount;
     
     // Allow deleting income even if it makes wallet negative?
     // User requested "If a transaction is deleted: The wallet balance must be restored appropriately."
