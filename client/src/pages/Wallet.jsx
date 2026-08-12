@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ExpenseContext } from '../context/ExpenseContext';
@@ -14,6 +14,10 @@ const Wallet = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeductionModalOpen, setIsDeductionModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (loading) return <div className="text-center py-10 text-slate-500 dark:text-slate-400 animate-pulse">Loading wallet...</div>;
 
