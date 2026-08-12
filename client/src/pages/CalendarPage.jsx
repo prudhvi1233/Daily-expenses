@@ -42,6 +42,13 @@ const CalendarPage = () => {
     return 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30';
   };
 
+  const formatCompactAmount = (amount) => {
+    if (!amount) return '';
+    if (amount >= 100000) return `₹${(amount / 100000).toFixed(1)}L`;
+    if (amount >= 1000) return `₹${(amount / 1000).toFixed(1)}k`;
+    return `₹${Math.round(amount)}`;
+  };
+
   const renderMonth = (monthDate) => {
     const start = startOfMonth(monthDate);
     const end = endOfMonth(monthDate);
@@ -81,14 +88,23 @@ const CalendarPage = () => {
             const dateStr = format(day, 'yyyy-MM-dd');
             const amount = dailyTotals[dateStr];
             const isToday = dateStr === format(new Date(), 'yyyy-MM-dd');
+            const compactAmount = formatCompactAmount(amount);
+            
             return (
               <button
                 key={dateStr}
                 onClick={() => navigate(`/dashboard/calendar/${dateStr}`)}
-                className={`aspect-square rounded-md flex items-center justify-center text-xs transition-all duration-200 hover:scale-110 ${getColorClass(amount)} ${isToday ? 'ring-2 ring-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)] z-10 text-white font-bold' : ''}`}
-                title={`${format(day, 'MMM d, yyyy')}${amount ? `: ₹${amount.toFixed(2)}` : ''}${isToday ? ' (Today)' : ''}`}
+                className={`aspect-square rounded-md flex flex-col items-center justify-center transition-all duration-200 hover:scale-110 ${getColorClass(amount)} ${isToday ? 'ring-2 ring-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)] z-10 font-bold' : ''}`}
+                title={`${format(day, 'MMM d, yyyy')}${amount ? `: ₹${amount.toFixed(2)} spent` : ''}${isToday ? ' (Today)' : ''}`}
               >
-                {format(day, 'd')}
+                <span className={`${isToday ? 'text-white' : ''} text-sm sm:text-base leading-none ${amount ? 'mb-0.5' : ''}`}>
+                  {format(day, 'd')}
+                </span>
+                {amount > 0 && (
+                  <span className={`text-[9px] sm:text-[10px] leading-tight px-1 font-medium ${isToday ? 'text-white/90' : 'opacity-80'}`}>
+                    {compactAmount}
+                  </span>
+                )}
               </button>
             );
           })}
