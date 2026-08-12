@@ -10,15 +10,37 @@ export const AuthProvider = ({ children }) => {
   const [profilePic, setProfilePic] = useState(null);
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      setUser(JSON.parse(userInfo));
-    }
-    const pic = localStorage.getItem('profilePic');
-    if (pic) {
-      setProfilePic(pic);
-    }
-    setLoading(false);
+    const fetchUser = async () => {
+      const userInfoStr = localStorage.getItem('userInfo');
+      if (userInfoStr) {
+        const localUser = JSON.parse(userInfoStr);
+        setUser(localUser);
+        
+        // Fetch latest data from backend to ensure wallet balance is synced
+        try {
+          const res = await api.get('/users/me');
+          const latestUser = { ...localUser, ...res.data };
+          setUser(latestUser);
+          localStorage.setItem('userInfo', JSON.stringify(latestUser));
+        } catch (error) {
+          console.error('Failed to sync latest user data:', error);
+          if (error.response?.status === 401) {
+            // Token is likely expired/invalid
+            setUser(null);
+            localStorage.removeItem('userInfo');
+          }
+        }
+      }
+      
+      const pic = localStorage.getItem('profilePic');
+      if (pic) {
+        setProfilePic(pic);
+      }
+      
+      setLoading(false);
+    };
+
+    fetchUser();
   }, []);
 
   const login = async (email, password) => {
