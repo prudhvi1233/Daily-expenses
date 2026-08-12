@@ -31,12 +31,11 @@ const Analytics = () => {
       if (expDate > maxDate) maxDate = expDate;
     });
 
-    const weeksSpan = differenceInCalendarWeeks(maxDate, minDate, { weekStartsOn: 1 }) + 1;
+    const elapsedDays = Math.max(1, differenceInCalendarDays(maxDate, minDate) + 1);
     
-    // Calculate averages harmonized around the calendar weeks logic
-    // This prevents artificial inflation if a user only has a few transactions close together
-    const avgWeekly = total / Math.max(1, weeksSpan);
-    const avgDaily = avgWeekly / 7;
+    // Calculate averages based on actual elapsed days
+    const avgDaily = total / elapsedDays;
+    const avgWeekly = total / (elapsedDays / 7);
     const avgMonthly = avgDaily * 30.44; // Standard month length
 
     // Sort category breakdown by highest spent first
