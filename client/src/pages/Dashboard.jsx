@@ -220,7 +220,11 @@ const Dashboard = () => {
 
           <div className="flex-1 overflow-hidden flex flex-col">
             <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">
-              <TaskList tasks={todayTasks} onEdit={handleEditTask} />
+              <TaskList 
+                tasks={todayTasks} 
+                onEdit={handleEditTask} 
+                onAddNew={() => { setEditingTask(null); setIsTaskModalOpen(true); }}
+              />
             </div>
           </div>
         </div>

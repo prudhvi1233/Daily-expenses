@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { TaskContext } from '../context/TaskContext';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
@@ -11,8 +11,20 @@ const PlannerPage = () => {
   const [activeTab, setActiveTab] = useState('Monday');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  
+  const scrollContainerRef = useRef(null);
 
   const activeTasks = tasks.filter(t => t.dayOfWeek === activeTab);
+
+  // Auto-scroll selected day into view on mobile
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const activeBtn = scrollContainerRef.current.querySelector(`[data-day="${activeTab}"]`);
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [activeTab]);
 
   const handleEdit = (task) => {
     setEditingTask(task);
@@ -23,30 +35,41 @@ const PlannerPage = () => {
     setIsModalOpen(false);
     setEditingTask(null);
   };
+  
+  const handleAddNewTask = () => {
+    setEditingTask(null);
+    setIsModalOpen(true);
+  };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Weekly Planner</h1>
+    <div className="pb-12 max-w-5xl mx-auto">
+      {/* Header section with flex-col on mobile */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-slate-100">Weekly Planner</h1>
         <button 
-          onClick={() => { setEditingTask(null); setIsModalOpen(true); }}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-medium transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+          onClick={handleAddNewTask}
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 sm:py-2 rounded-xl font-medium transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:-translate-y-0.5"
         >
           <MdAdd size={20} />
-          <span className="hidden sm:inline">Add Task</span>
-          <span className="sm:hidden">Add</span>
+          <span>Add Task</span>
         </button>
       </div>
 
-      <div className="flex overflow-x-auto gap-2 mb-6 pb-2 hide-scrollbar">
+      {/* Horizontally scrollable day selector */}
+      <div 
+        ref={scrollContainerRef}
+        className="flex overflow-x-auto gap-2 sm:gap-3 mb-6 pb-2 snap-x snap-mandatory custom-scrollbar"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         {DAYS.map(day => (
           <button
             key={day}
+            data-day={day}
             onClick={() => setActiveTab(day)}
-            className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+            className={`px-5 py-3 sm:py-2.5 rounded-xl font-medium whitespace-nowrap transition-colors snap-center flex-shrink-0 text-sm sm:text-base ${
               activeTab === day 
-              ? 'bg-blue-500/10 text-blue-600 border border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/30' 
-              : 'glass-panel text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' 
+              : 'bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300'
             }`}
           >
             {day}
@@ -54,9 +77,19 @@ const PlannerPage = () => {
         ))}
       </div>
 
-      <div className="glass-panel p-4 sm:p-6">
-        <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6">{activeTab}'s Schedule</h2>
-        <TaskList tasks={activeTasks} onEdit={handleEdit} />
+      <div className="glass-panel p-4 sm:p-6 sm:p-8">
+        <div className="mb-6 sm:mb-8 border-b border-black/5 dark:border-white/5 pb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-100">{activeTab}'s Schedule</h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            {activeTasks.length} {activeTasks.length === 1 ? 'Task' : 'Tasks'}
+          </p>
+        </div>
+        
+        <TaskList 
+          tasks={activeTasks} 
+          onEdit={handleEdit} 
+          onAddNew={handleAddNewTask} 
+        />
       </div>
 
       {isModalOpen && (
