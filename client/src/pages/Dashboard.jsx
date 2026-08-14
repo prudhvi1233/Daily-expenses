@@ -4,12 +4,13 @@ import { ExpenseContext } from '../context/ExpenseContext';
 import { TaskContext } from '../context/TaskContext';
 import { calculateSummaries } from '../utils/dashboardUtils';
 import ExpenseForm from '../components/ExpenseForm';
+import VoiceExpenseModal from '../components/VoiceExpenseModal';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
 import { 
   MdToday, MdDateRange, MdCalendarMonth, MdAnalytics, MdReceipt, MdAdd, 
   MdArrowForward, MdRestaurantMenu, MdDirectionsBus, MdLocalHospital, 
-  MdShoppingCart, MdAttachMoney 
+  MdShoppingCart, MdAttachMoney, MdMic 
 } from 'react-icons/md';
 import { format, parseISO, isSameDay, startOfWeek, addDays } from 'date-fns';
 import { formatTime12Hour } from '../utils/formatTime';
@@ -39,6 +40,8 @@ const Dashboard = () => {
   const [isExpenseAddOpen, setIsExpenseAddOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+
+  const [isVoiceExpenseOpen, setIsVoiceExpenseOpen] = useState(false);
 
   // Spending Overview Chart Data (Current Week: Mon - Sun)
   const chartData = useMemo(() => {
@@ -100,16 +103,26 @@ const Dashboard = () => {
   return (
     <div className="pb-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6 sm:mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-slate-100">Dashboard</h1>
-        <button 
-          onClick={() => setIsExpenseAddOpen(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20 text-sm sm:text-base"
-        >
-          <MdAdd size={20} />
-          <span className="hidden sm:inline">Add Expense</span>
-          <span className="sm:hidden">Add</span>
-        </button>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <button 
+            onClick={() => setIsVoiceExpenseOpen(true)}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 dark:bg-white/10 dark:hover:bg-white/20 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-black/10 text-sm sm:text-base border border-slate-700 dark:border-white/10"
+          >
+            <MdMic size={20} className="text-blue-400" />
+            <span className="hidden sm:inline">Add by Voice</span>
+            <span className="sm:hidden">Voice</span>
+          </button>
+          <button 
+            onClick={() => setIsExpenseAddOpen(true)}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20 text-sm sm:text-base"
+          >
+            <MdAdd size={20} />
+            <span className="hidden sm:inline">Add Expense</span>
+            <span className="sm:hidden">Add</span>
+          </button>
+        </div>
       </div>
       
       {/* Summary Cards */}
@@ -285,6 +298,12 @@ const Dashboard = () => {
       {isExpenseAddOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <ExpenseForm onClose={() => setIsExpenseAddOpen(false)} />
+        </div>
+      )}
+
+      {isVoiceExpenseOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <VoiceExpenseModal onClose={() => setIsVoiceExpenseOpen(false)} />
         </div>
       )}
 

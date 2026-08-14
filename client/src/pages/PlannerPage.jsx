@@ -8,7 +8,11 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 
 const PlannerPage = () => {
   const { tasks } = useContext(TaskContext);
-  const [activeTab, setActiveTab] = useState('Monday');
+  
+  // Initialize to current day (0 is Sunday, 1 is Monday in JS, but DAYS array starts with Monday)
+  const todayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
+  const [activeTab, setActiveTab] = useState(DAYS[todayIndex]);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   
