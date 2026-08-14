@@ -191,12 +191,12 @@ const Wallet = () => {
               );
             })}
 
-            {expenses.filter(t => t.type === 'income' || t.type === 'other_deduction').length > 10 && !showAll && (
+            {expenses.length > 0 && (
               <button 
-                onClick={() => navigate('/dashboard/wallet/history')}
+                onClick={() => navigate('/dashboard/transactions')}
                 className="w-full py-4 mt-4 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-colors"
               >
-                View Complete Wallet History <span aria-hidden="true">&rarr;</span>
+                View Complete History <span aria-hidden="true">&rarr;</span>
               </button>
             )}
           </div>

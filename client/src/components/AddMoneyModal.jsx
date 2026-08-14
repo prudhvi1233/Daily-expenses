@@ -7,6 +7,8 @@ const AddMoneyModal = ({ onClose, income = null }) => {
   const [amount, setAmount] = useState(income ? income.amount : '');
   const [description, setDescription] = useState(income ? income.description : '');
   const [category, setCategory] = useState(income ? income.category : 'Salary');
+  const [date, setDate] = useState(income ? income.date : new Date().toISOString().split('T')[0]);
+  const [time, setTime] = useState(income ? income.time : new Date().toTimeString().split(' ')[0].substring(0, 5));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,22 +29,18 @@ const AddMoneyModal = ({ onClose, income = null }) => {
           amount: Number(amount),
           description,
           category,
-          date: income.date,
-          time: income.time,
+          date: date,
+          time: time,
           paymentMethod: income.paymentMethod
         });
       } else {
-        const date = new Date();
-        const dateStr = date.toISOString().split('T')[0];
-        const timeStr = date.toTimeString().split(' ')[0].substring(0, 5);
-
         await addExpense({
           type: 'income',
           amount: Number(amount),
           description,
           category,
-          date: dateStr,
-          time: timeStr,
+          date: date,
+          time: time,
           paymentMethod: 'Net Banking'
         });
       }
@@ -108,6 +106,29 @@ const AddMoneyModal = ({ onClose, income = null }) => {
                 <option key={src} value={src}>{src}</option>
               ))}
             </select>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Date</label>
+              <input 
+                type="date" 
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Time</label>
+              <input 
+                type="time" 
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
           </div>
 
           <div className="pt-4 flex gap-3">

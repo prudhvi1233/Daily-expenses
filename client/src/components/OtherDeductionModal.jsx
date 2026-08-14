@@ -6,6 +6,8 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
   const { addExpense, updateExpense } = useContext(ExpenseContext);
   const [amount, setAmount] = useState(deduction ? deduction.amount : '');
   const [description, setDescription] = useState(deduction ? deduction.description : '');
+  const [date, setDate] = useState(deduction ? deduction.date : new Date().toISOString().split('T')[0]);
+  const [time, setTime] = useState(deduction ? deduction.time : new Date().toTimeString().split(' ')[0].substring(0, 5));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,22 +28,18 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
           amount: Number(amount),
           description,
           category: 'Other Deduction', // internal placeholder
-          date: deduction.date,
-          time: deduction.time,
+          date: date,
+          time: time,
           paymentMethod: 'Wallet'
         });
       } else {
-        const date = new Date();
-        const dateStr = date.toISOString().split('T')[0];
-        const timeStr = date.toTimeString().split(' ')[0].substring(0, 5);
-
         await addExpense({
           type: 'other_deduction',
           amount: Number(amount),
           description,
           category: 'Other Deduction', // internal placeholder
-          date: dateStr,
-          time: timeStr,
+          date: date,
+          time: time,
           paymentMethod: 'Wallet'
         });
       }
@@ -92,6 +90,29 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
               placeholder="e.g. Bank EMI"
               required
             />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Date</label>
+              <input 
+                type="date" 
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-rose-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Time</label>
+              <input 
+                type="time" 
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-rose-500"
+                required
+              />
+            </div>
           </div>
 
           <div className="pt-4 flex gap-3">
