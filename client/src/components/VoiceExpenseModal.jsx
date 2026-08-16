@@ -39,6 +39,7 @@ const VoiceExpenseModal = ({ onClose }) => {
   });
 
   const recognitionRef = useRef(null);
+  const previousIsListening = useRef(false);
 
   useEffect(() => {
     // Initialize Web Speech API
@@ -113,10 +114,16 @@ const VoiceExpenseModal = ({ onClose }) => {
 
   // Process transcript when listening stops and we have a final transcript
   useEffect(() => {
-    if (!isListening && transcript) {
-      setLastHeard(transcript);
-      processTranscript(transcript.toLowerCase().trim(), transcript.trim());
+    if (previousIsListening.current === true && isListening === false) {
+      if (transcript) {
+        setLastHeard(transcript);
+        processTranscript(transcript.toLowerCase().trim(), transcript.trim());
+      } else {
+        // Fallback error if the speech API silently stopped without capturing anything
+        setErrorMsg(prev => prev || "I didn't catch that. Please try again.");
+      }
     }
+    previousIsListening.current = isListening;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isListening, transcript]);
 
@@ -311,7 +318,7 @@ const VoiceExpenseModal = ({ onClose }) => {
         amount: dataToSave.amount,
         category: dataToSave.category,
         description: dataToSave.description || dataToSave.category,
-        paymentMethod: 'Cash',
+        paymentMethod: 'UPI',
         date: dataToSave.date,
         time: dataToSave.time
       });

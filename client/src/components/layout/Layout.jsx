@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from './Sidebar';
@@ -7,10 +7,14 @@ import Navbar from './Navbar';
 const Layout = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mainRef = useRef(null);
 
-  // Close mobile menu on route change
+  // Close mobile menu on route change and reset scroll position
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    if (mainRef.current) {
+      mainRef.current.scrollTo(0, 0);
+    }
   }, [location.pathname]);
 
   return (
@@ -25,7 +29,7 @@ const Layout = () => {
       <Sidebar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
       <div className="flex-1 flex flex-col md:ml-64 relative w-full">
         <Navbar onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-5 md:p-8">
+        <main ref={mainRef} className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-5 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
