@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ExpenseContext } from '../context/ExpenseContext';
-import { format, parseISO, isSameMonth, getWeekOfMonth } from 'date-fns';
+import { format, parseISO, isSameMonth } from 'date-fns';
 import { MdArrowBack, MdArrowDownward, MdRemove } from 'react-icons/md';
 
 const MonthlyGrandTotalPage = () => {
@@ -13,55 +13,37 @@ const MonthlyGrandTotalPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { grandTotal, normalTotal, deductionsTotal, weeklyData } = useMemo(() => {
-    if (!expenses) return { grandTotal: 0, normalTotal: 0, deductionsTotal: 0, weeklyData: [] };
+  const { grandTotal, normalTotal, deductionsTotal } = useMemo(() => {
+    if (!expenses) return { grandTotal: 0, normalTotal: 0, deductionsTotal: 0 };
 
     const targetDate = new Date(parseInt(year), parseInt(month) - 1, 1);
     
-    // Filter for the month, NOT income, and NOT 'sameer old balance'
-    const monthlyExpenses = expenses.filter(tx => {
-      if (!tx.date) return false;
-      const txDate = parseISO(tx.date);
-      if (!isSameMonth(txDate, targetDate)) return false;
-      if (tx.type === 'income') return false;
-      
-      const desc = (tx.description || '').toLowerCase();
-      if (desc.includes('sameer old balance')) return false;
-      
-      return true;
-    });
-
     let normal = 0;
     let deductions = 0;
-    const weeks = {};
 
-    monthlyExpenses.forEach(tx => {
-      const isDeduction = tx.type === 'other_deduction';
-      if (isDeduction) deductions += tx.amount;
-      else normal += tx.amount;
-
+    expenses.forEach(tx => {
+      if (!tx.date) return;
       const txDate = parseISO(tx.date);
-      const weekIndex = getWeekOfMonth(txDate);
+      
+      // Strict calendar month filter
+      if (!isSameMonth(txDate, targetDate)) return;
+      if (tx.type === 'income') return;
+      
+      const desc = (tx.description || '').toLowerCase();
+      if (desc.includes('sameer old balance')) return;
 
-      if (!weeks[weekIndex]) {
-        weeks[weekIndex] = { week: weekIndex, personal: 0, deduction: 0, total: 0 };
-      }
-
+      const isDeduction = tx.type === 'other_deduction';
       if (isDeduction) {
-        weeks[weekIndex].deduction += tx.amount;
+        deductions += tx.amount;
       } else {
-        weeks[weekIndex].personal += tx.amount;
+        normal += tx.amount;
       }
-      weeks[weekIndex].total += tx.amount;
     });
-
-    const weeklyData = Object.values(weeks).sort((a, b) => a.week - b.week);
 
     return {
       grandTotal: normal + deductions,
       normalTotal: normal,
-      deductionsTotal: deductions,
-      weeklyData
+      deductionsTotal: deductions
     };
   }, [expenses, year, month]);
 
@@ -119,38 +101,7 @@ const MonthlyGrandTotalPage = () => {
         </div>
       </div>
 
-      {/* Weekly Breakdown */}
-      <div className="glass-panel p-4 sm:p-6">
-        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6">Weekly Breakdown</h2>
-        
-        {weeklyData.length === 0 ? (
-          <p className="text-slate-500 dark:text-slate-400 text-center py-6">No data found for this month.</p>
-        ) : (
-          <div className="space-y-4">
-            {weeklyData.map(week => (
-              <div key={week.week} className="p-4 sm:p-5 rounded-xl bg-white/50 dark:bg-black/20 border border-black/5 dark:border-white/5 hover:border-black/10 dark:hover:border-white/10 transition-colors">
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-bold text-lg text-slate-800 dark:text-slate-100">Week {week.week}</h3>
-                  <p className="font-black text-rose-500 text-lg">₹{week.total.toFixed(2)}</p>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-8 pt-3 border-t border-black/5 dark:border-white/5">
-                  <div className="flex items-center gap-2">
-                    <MdArrowDownward className="text-rose-400" size={18} />
-                    <span className="text-sm text-slate-500 dark:text-slate-400">Personal:</span>
-                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">₹{week.personal.toFixed(2)}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MdRemove className="text-orange-400" size={18} />
-                    <span className="text-sm text-slate-500 dark:text-slate-400">Deductions:</span>
-                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">₹{week.deduction.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+
     </div>
   );
 };
