@@ -54,9 +54,10 @@ const ProfilePage = () => {
   };
 
   // Stats calculation
-  const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  const totalTransactions = expenses.length;
-  const highestExpense = expenses.length > 0 ? Math.max(...expenses.map(e => e.amount)) : 0;
+  const normalExpenses = expenses.filter(exp => !exp.type || exp.type === 'expense');
+  const totalExpenses = normalExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+  const totalTransactions = normalExpenses.length;
+  const highestExpense = normalExpenses.length > 0 ? Math.max(...normalExpenses.map(e => e.amount)) : 0;
   
   const handlePasswordSubmit = (e) => {
     e.preventDefault();

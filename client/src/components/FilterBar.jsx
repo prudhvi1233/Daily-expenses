@@ -18,7 +18,7 @@ const FilterBar = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className="bg-white/60 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl p-4 mb-6 shadow-sm flex flex-col gap-4">
+    <div className="glass-panel p-4 mb-6 flex flex-col gap-4">
       
       {/* Top Row: Search and Title (Mobile) / Clear (Desktop) */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -31,7 +31,7 @@ const FilterBar = ({ filters, setFilters }) => {
             placeholder="Search descriptions or amount..." 
             value={filters.search}
             onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-            className="block w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-xl leading-5 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all sm:text-sm"
+            className="block w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-white/10 rounded-xl leading-5 bg-white dark:bg-black/20 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all sm:text-sm"
           />
         </div>
         
@@ -55,7 +55,7 @@ const FilterBar = ({ filters, setFilters }) => {
         <select 
           value={filters.dateRange} 
           onChange={handleDateChange}
-          className="flex-1 sm:flex-none min-w-[140px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 px-3 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer appearance-none shadow-sm"
+          className="flex-1 sm:flex-none min-w-[140px] bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-lg py-1.5 px-3 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer appearance-none shadow-sm"
         >
           <option value="All">All Time</option>
           <option value="Today">Today</option>
@@ -69,7 +69,7 @@ const FilterBar = ({ filters, setFilters }) => {
         <select 
           value={filters.category} 
           onChange={handleCategoryChange}
-          className="flex-1 sm:flex-none min-w-[140px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 px-3 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer appearance-none shadow-sm"
+          className="flex-1 sm:flex-none min-w-[140px] bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-lg py-1.5 px-3 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer appearance-none shadow-sm"
         >
           <option value="All">All Categories</option>
           {['Food', 'Travel', 'Shopping', 'Medical', 'Education', 'Entertainment', 'Recharge', 'Bills', 'Home', 'Fuel', 'Others'].map(cat => (
@@ -80,7 +80,7 @@ const FilterBar = ({ filters, setFilters }) => {
         <select 
           value={filters.paymentMethod} 
           onChange={handleMethodChange}
-          className="flex-1 sm:flex-none min-w-[140px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 px-3 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer appearance-none shadow-sm"
+          className="flex-1 sm:flex-none min-w-[140px] bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-lg py-1.5 px-3 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer appearance-none shadow-sm"
         >
           <option value="All">All Methods</option>
           {['Cash', 'UPI', 'Credit Card', 'Debit Card', 'Net Banking'].map(method => (

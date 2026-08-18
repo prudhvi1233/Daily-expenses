@@ -45,12 +45,12 @@ const TransactionTable = ({ expenses, onEdit }) => {
   if (expenses.length === 0) return <div className="text-center py-10 text-slate-500 dark:text-slate-400">No transactions found matching your filters.</div>;
 
   return (
-    <div className="bg-white/60 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div className="w-full">
       
       {/* MOBILE VIEW (Cards) */}
-      <div className="flex flex-col divide-y divide-slate-100 dark:divide-slate-800/50 md:hidden">
+      <div className="flex flex-col divide-y divide-slate-100 dark:divide-white/5 md:hidden">
         {expenses.map((expense) => (
-          <div key={expense._id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <div key={expense._id} className="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
             <div className="flex justify-between items-start mb-2">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-xl border ${categoryColors[expense.category] || categoryColors['Others']}`}>
@@ -100,7 +100,7 @@ const TransactionTable = ({ expenses, onEdit }) => {
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">
+            <tr className="border-b border-slate-200 dark:border-white/5 bg-slate-50/50 dark:bg-black/20 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">
               <th className="p-4 pl-6">Date & Time</th>
               <th className="p-4">Description</th>
               <th className="p-4">Category</th>
@@ -109,9 +109,9 @@ const TransactionTable = ({ expenses, onEdit }) => {
               <th className="p-4 pr-6 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
+          <tbody className="divide-y divide-slate-100 dark:divide-white/5">
             {expenses.map((expense) => (
-              <tr key={expense._id} className="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+              <tr key={expense._id} className="group hover:bg-slate-50/80 dark:hover:bg-white/5 transition-colors">
                 <td className="p-4 pl-6">
                   <div className="font-medium text-slate-700 dark:text-slate-300">{format(new Date(expense.date), 'MMM dd, yyyy')}</div>
                   <div className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{format(new Date(expense.date), 'EEEE')} • {formatTime12Hour(expense.time)}</div>
