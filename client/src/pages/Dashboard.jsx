@@ -128,7 +128,7 @@ const Dashboard = () => {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
         <SummaryCard 
-          title="Today's Expense" amount={today} 
+          title="Today's Exp" amount={today} 
           icon={<MdToday className="text-blue-400" />} 
           colorClass="bg-blue-500/10 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
         />

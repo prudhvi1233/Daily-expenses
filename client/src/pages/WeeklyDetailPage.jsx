@@ -96,22 +96,42 @@ const WeeklyDetailPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="p-4 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20"><MdReceipt size={28} /></div>
-          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Weekly Total</p><h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">₹{summary.total?.toFixed(2)}</h3></div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
+        <div className="glass-panel p-3 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+          <div className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <MdReceipt className="w-5 h-5 sm:w-7 sm:h-7" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mb-0.5 sm:mb-1 truncate">Weekly Total</p>
+            <h3 className="text-base sm:text-2xl font-bold text-slate-800 dark:text-slate-100 truncate">₹{summary.total?.toFixed(2)}</h3>
+          </div>
         </div>
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="p-4 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"><MdReceipt size={28} /></div>
-          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Transactions</p><h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{summary.count}</h3></div>
+        <div className="glass-panel p-3 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+          <div className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <MdReceipt className="w-5 h-5 sm:w-7 sm:h-7" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mb-0.5 sm:mb-1 truncate">Transactions</p>
+            <h3 className="text-base sm:text-2xl font-bold text-slate-800 dark:text-slate-100 truncate">{summary.count}</h3>
+          </div>
         </div>
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="p-4 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20"><MdCategory size={28} /></div>
-          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Top Category</p><h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 truncate">{summary.topCategory}</h3></div>
+        <div className="glass-panel p-3 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+          <div className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+            <MdCategory className="w-5 h-5 sm:w-7 sm:h-7" />
+          </div>
+          <div className="min-w-0 w-full">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mb-0.5 sm:mb-1 truncate">Top Category</p>
+            <h3 className="text-sm sm:text-xl font-bold text-slate-800 dark:text-slate-100 truncate">{summary.topCategory}</h3>
+          </div>
         </div>
-        <div className="glass-panel p-6 flex items-center gap-4">
-          <div className="p-4 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20"><MdTrendingUp size={28} /></div>
-          <div><p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">Highest Day</p><h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{summary.highestSpendingDay}</h3></div>
+        <div className="glass-panel p-3 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+          <div className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-red-500/10 text-red-400 border border-red-500/20">
+            <MdTrendingUp className="w-5 h-5 sm:w-7 sm:h-7" />
+          </div>
+          <div className="min-w-0 w-full">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mb-0.5 sm:mb-1 truncate">Highest Day</p>
+            <h3 className="text-sm sm:text-xl font-bold text-slate-800 dark:text-slate-100 truncate">{summary.highestSpendingDay}</h3>
+          </div>
         </div>
       </div>
 
