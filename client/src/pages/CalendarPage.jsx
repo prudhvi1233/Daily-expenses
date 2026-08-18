@@ -2,7 +2,7 @@ import React, { useState, useContext, useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExpenseContext } from '../context/ExpenseContext';
 import { format, eachMonthOfInterval, startOfYear, endOfYear, eachDayOfInterval, startOfMonth, endOfMonth, getDay } from 'date-fns';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { MdChevronLeft, MdChevronRight, MdOpenInNew } from 'react-icons/md';
 
 const CalendarPage = () => {
   const { expenses } = useContext(ExpenseContext);
@@ -75,9 +75,21 @@ const CalendarPage = () => {
           <h3 className={`text-lg font-bold ${isCurrentMonth ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'}`}>
             {format(monthDate, 'MMMM')}
           </h3>
-          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-            Total: ₹{monthTotal.toFixed(2)}
-          </p>
+          <div className="flex items-center justify-center gap-1.5 mt-0.5">
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              Total: ₹{monthTotal.toFixed(2)}
+            </p>
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/dashboard/calendar/month/${format(monthDate, 'yyyy')}/${format(monthDate, 'MM')}`);
+              }}
+              className="p-1 rounded-full text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 transition-colors"
+              title="View Grand Total (including deductions)"
+            >
+              <MdOpenInNew size={14} />
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-7 gap-1 mb-2 text-center text-xs text-slate-600 dark:text-slate-500 font-medium">
           {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(d => <div key={d}>{d}</div>)}

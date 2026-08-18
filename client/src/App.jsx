@@ -12,6 +12,7 @@ import CalendarPage from './pages/CalendarPage';
 import DailyExpensePage from './pages/DailyExpensePage';
 import WeeklySummaryPage from './pages/WeeklySummaryPage';
 import WeeklyDetailPage from './pages/WeeklyDetailPage';
+import MonthlyGrandTotalPage from './pages/MonthlyGrandTotalPage';
 import PlannerPage from './pages/PlannerPage';
 import Wallet from './pages/Wallet';
 import WalletHistory from './pages/WalletHistory';
@@ -49,6 +50,7 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="transactions" element={<Transactions />} />
               <Route path="calendar" element={<CalendarPage />} />
+              <Route path="calendar/month/:year/:month" element={<MonthlyGrandTotalPage />} />
               <Route path="calendar/:date" element={<DailyExpensePage />} />
               <Route path="weekly" element={<WeeklySummaryPage />} />
               <Route path="weekly/:year/:week" element={<WeeklyDetailPage />} />
