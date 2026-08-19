@@ -47,14 +47,23 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
     }
   };
 
-  const handleQuickExpenseClick = (qe) => {
+  const handleQuickExpenseClick = async (qe) => {
     setSelectedQuickExpense(qe._id);
-    setValue('amount', qe.amount);
-    setValue('description', qe.description);
-    setValue('category', qe.category || 'Food');
-    setValue('paymentMethod', qe.paymentMethod || 'UPI');
-    setValue('date', format(new Date(), 'yyyy-MM-dd'));
-    setValue('time', format(new Date(), 'HH:mm'));
+    try {
+      setSubmitting(true);
+      await addExpense({
+        amount: qe.amount,
+        description: qe.description,
+        category: qe.category || 'Food',
+        paymentMethod: qe.paymentMethod || 'UPI',
+        date: format(new Date(), 'yyyy-MM-dd'),
+        time: format(new Date(), 'HH:mm')
+      });
+      onClose();
+    } catch (error) {
+      alert(error.message);
+      setSubmitting(false);
+    }
   };
 
   if (isManagingQuickExpenses) {
