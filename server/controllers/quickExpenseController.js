@@ -62,6 +62,33 @@ const deleteQuickExpense = async (req, res) => {
   }
 };
 
+// @desc    Update quick expense
+// @route   PUT /api/quick-expenses/:id
+// @access  Private
+const updateQuickExpense = async (req, res) => {
+  try {
+    const quickExpense = await QuickExpense.findById(req.params.id);
+
+    if (!quickExpense) {
+      return res.status(404).json({ message: 'Quick expense not found' });
+    }
+
+    if (quickExpense.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: 'User not authorized' });
+    }
+
+    const updatedExpense = await QuickExpense.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).json(updatedExpense);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getQuickExpenses,
   addQuickExpense,
