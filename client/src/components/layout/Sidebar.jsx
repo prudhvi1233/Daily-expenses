@@ -24,7 +24,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           onClick={onClose}
         ></div>
       )}
-      <div className={`w-64 bg-white/70 dark:bg-black/40 backdrop-blur-xl border-r border-black/10 dark:border-white/10 h-screen fixed top-0 left-0 z-50 flex flex-col transition-transform duration-300 ${
+      <div className={`w-64 bg-[#EEF3FA] dark:bg-black/40 backdrop-blur-xl border-r border-[#E2E8F0] dark:border-white/10 h-screen fixed top-0 left-0 z-50 flex flex-col transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}>
         <div className="p-6 flex justify-between items-center">
@@ -45,8 +45,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                 className={({ isActive }) =>
                   `group flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 ${
                     isActive 
-                    ? 'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 font-semibold shadow-[inset_4px_0_0_0_rgba(59,130,246,1)] dark:shadow-[inset_4px_0_0_0_rgba(96,165,250,1)]' 
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-white/5 font-medium'
+                    ? 'bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-500/20 dark:text-blue-400 font-semibold shadow-[inset_4px_0_0_0_#2563EB] dark:shadow-[inset_4px_0_0_0_rgba(96,165,250,1)]' 
+                    : 'text-[#172033] hover:text-[#2563EB] hover:bg-white dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-white/5 font-medium'
                   }`
                 }
               >

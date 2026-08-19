@@ -3,7 +3,7 @@
 
 @layer base {
   body {
-    @apply text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-blue-500/30 selection:text-blue-200;
+    @apply text-[#172033] dark:text-slate-100 font-sans antialiased selection:bg-blue-500/30 selection:text-blue-200;
     min-height: 100vh;
   }
 
@@ -29,7 +29,8 @@
     opacity: 0;
   }
   #bg-light {
-    background-image: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), url('/assets/theme2.png');
+    background-color: #F4F7FB;
+    background-image: linear-gradient(rgba(244, 247, 251, 0.95), rgba(244, 247, 251, 0.95)), url('/assets/theme2.png');
     opacity: 1;
   }
   
@@ -90,11 +91,9 @@
 
   /* Glassmorphism Classes */
   .glass-panel {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
     border-radius: 18px;
   }
   .dark .glass-panel {

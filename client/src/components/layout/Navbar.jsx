@@ -17,7 +17,7 @@ const Navbar = ({ onMenuClick }) => {
   };
   
   return (
-    <header className="h-20 bg-white/60 dark:bg-black/20 backdrop-blur-xl border-b border-black/10 dark:border-white/10 sticky top-0 z-10 flex items-center px-4 md:px-8 transition-colors">
+    <header className="h-20 bg-white dark:bg-black/20 backdrop-blur-xl border-b border-[#E2E8F0] dark:border-white/10 sticky top-0 z-10 flex items-center px-4 md:px-8 transition-colors">
       <div className="flex-1 flex justify-between items-center">
         <div className="flex items-center gap-3 md:hidden">
           <button onClick={onMenuClick} className="text-slate-800 dark:text-slate-200 p-2 -ml-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors">

@@ -108,7 +108,7 @@ const Dashboard = () => {
         <div className="flex gap-2 w-full sm:w-auto">
           <button 
             onClick={() => setIsVoiceExpenseOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 dark:bg-white/10 dark:hover:bg-white/20 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-black/10 text-sm sm:text-base border border-slate-700 dark:border-white/10"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#172033] hover:bg-slate-700 dark:bg-white/10 dark:hover:bg-white/20 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-black/10 text-sm sm:text-base border border-[#172033] dark:border-white/10"
           >
             <MdMic size={20} className="text-blue-400" />
             <span className="hidden sm:inline">Add by Voice</span>
@@ -116,7 +116,7 @@ const Dashboard = () => {
           </button>
           <button 
             onClick={() => setIsExpenseAddOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20 text-sm sm:text-base"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20 text-sm sm:text-base"
           >
             <MdAdd size={20} />
             <span className="hidden sm:inline">Add Expense</span>
@@ -211,7 +211,7 @@ const Dashboard = () => {
             </div>
             <button 
               onClick={() => { setEditingTask(null); setIsTaskModalOpen(true); }}
-              className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 text-slate-800 border-black/10 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-medium transition-colors border dark:border-white/10 text-sm sm:text-base w-full sm:w-auto justify-center"
+              className="flex items-center gap-1.5 bg-white hover:bg-[#EFF6FF] text-[#2563EB] border-[#E2E8F0] dark:bg-white/10 dark:hover:bg-white/20 dark:text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-medium transition-colors border dark:border-white/10 text-sm sm:text-base w-full sm:w-auto justify-center shadow-sm"
             >
               <MdAdd size={18} />
               <span>Add Task</span>
