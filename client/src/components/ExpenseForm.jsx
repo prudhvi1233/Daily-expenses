@@ -160,9 +160,9 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
                   <button 
                     type="button"
                     onClick={(e) => handleDeleteClick(e, qe)}
-                    className="absolute -top-1.5 -right-1.5 bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-200 rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute -top-2 -right-2 bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-200 rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shadow-sm hover:scale-110 active:scale-95 z-10"
                   >
-                    <MdClose size={12} />
+                    <MdClose size={14} />
                   </button>
                 </div>
               ))}
