@@ -4,8 +4,9 @@ import { ExpenseContext } from '../context/ExpenseContext';
 import { format } from 'date-fns';
 import ClockTimePicker from './ClockTimePicker';
 import { QuickExpenseContext } from '../context/QuickExpenseContext';
+import ManageQuickExpenses from './ManageQuickExpenses';
 import QuickExpenseModal from './QuickExpenseModal';
-import { MdClose } from 'react-icons/md';
+import { MdCheck } from 'react-icons/md';
 
 const ExpenseForm = ({ expense, onClose, defaultDate }) => {
   const { addExpense, updateExpense } = useContext(ExpenseContext);
@@ -14,9 +15,9 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
   const deleteQuickExpense = quickExpenseContextData.deleteQuickExpense || (() => {});
 
   const [submitting, setSubmitting] = useState(false);
+  const [isManagingQuickExpenses, setIsManagingQuickExpenses] = useState(false);
   const [isAddingQuickExpense, setIsAddingQuickExpense] = useState(false);
-  const [expenseToDelete, setExpenseToDelete] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedQuickExpense, setSelectedQuickExpense] = useState(null);
   
   const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({
     defaultValues: expense ? {
@@ -46,76 +47,22 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
     }
   };
 
-  const handleQuickExpenseClick = async (qe) => {
-    try {
-      setSubmitting(true);
-      await addExpense({
-        amount: qe.amount,
-        description: qe.description,
-        category: qe.category || 'Food',
-        paymentMethod: qe.paymentMethod || 'UPI',
-        date: format(new Date(), 'yyyy-MM-dd'),
-        time: format(new Date(), 'HH:mm')
-      });
-      onClose();
-    } catch (error) {
-      alert(error.message);
-      setSubmitting(false);
-    }
+  const handleQuickExpenseClick = (qe) => {
+    setSelectedQuickExpense(qe._id);
+    setValue('amount', qe.amount);
+    setValue('description', qe.description);
+    setValue('category', qe.category || 'Food');
+    setValue('paymentMethod', qe.paymentMethod || 'UPI');
+    setValue('date', format(new Date(), 'yyyy-MM-dd'));
+    setValue('time', format(new Date(), 'HH:mm'));
   };
 
-  const handleDeleteClick = (e, qe) => {
-    e.stopPropagation();
-    setExpenseToDelete(qe);
-  };
-
-  const confirmDelete = async () => {
-    if (!expenseToDelete) return;
-    try {
-      setIsDeleting(true);
-      await deleteQuickExpense(expenseToDelete._id);
-      setExpenseToDelete(null);
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+  if (isManagingQuickExpenses) {
+    return <ManageQuickExpenses onClose={() => setIsManagingQuickExpenses(false)} />;
+  }
 
   if (isAddingQuickExpense) {
     return <QuickExpenseModal onClose={() => setIsAddingQuickExpense(false)} />;
-  }
-
-  if (expenseToDelete) {
-    return (
-      <div className="glass-panel p-6 w-full max-w-sm mx-auto text-center relative z-50">
-        <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-          <MdClose size={32} />
-        </div>
-        <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Delete Quick Expense?</h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
-          Are you sure you want to delete <span className="font-semibold text-slate-700 dark:text-slate-200">"{expenseToDelete.description}"</span>? This action cannot be undone.
-        </p>
-        <div className="flex gap-3 justify-center">
-          <button 
-            type="button"
-            onClick={() => setExpenseToDelete(null)}
-            disabled={isDeleting}
-            className="px-5 py-2.5 rounded-lg font-medium bg-black/5 hover:bg-black/10 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors disabled:opacity-50"
-          >
-            Cancel
-          </button>
-          <button 
-            type="button"
-            onClick={confirmDelete}
-            disabled={isDeleting}
-            className="px-5 py-2.5 rounded-lg font-medium bg-red-600 hover:bg-red-500 text-white transition-colors disabled:opacity-50"
-          >
-            {isDeleting ? 'Deleting...' : 'Delete'}
-          </button>
-        </div>
-      </div>
-    );
   }
 
   return (
@@ -145,33 +92,48 @@ const ExpenseForm = ({ expense, onClose, defaultDate }) => {
         {/* Quick Expenses Section */}
         {!expense && (
           <div className="pt-2 pb-2">
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wider">Quick Expenses</p>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Quick Expenses</p>
+              <button 
+                type="button"
+                onClick={() => setIsManagingQuickExpenses(true)}
+                className="text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+              >
+                Manage
+              </button>
+            </div>
             <div className="flex flex-wrap gap-2">
-              {quickExpenses.map(qe => (
-                <div 
-                  key={qe._id}
-                  onClick={() => handleQuickExpenseClick(qe)}
-                  className="group relative flex items-center gap-1.5 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 hover:bg-[#EFF6FF] hover:border-blue-200 dark:hover:bg-slate-700 px-3 py-1.5 rounded-full cursor-pointer transition-colors shadow-sm"
-                >
-                  <span className="text-sm">{qe.icon || '📌'}</span>
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{qe.description}</span>
-                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400 ml-1">₹{qe.amount}</span>
-                  
+              {quickExpenses.map(qe => {
+                const isSelected = selectedQuickExpense === qe._id;
+                return (
                   <button 
+                    key={qe._id}
                     type="button"
-                    onClick={(e) => handleDeleteClick(e, qe)}
-                    className="absolute -top-2 -right-2 bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-200 rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shadow-sm hover:scale-110 active:scale-95 z-10"
+                    onClick={() => handleQuickExpenseClick(qe)}
+                    className={`
+                      relative flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm transition-all shadow-sm border
+                      ${isSelected 
+                        ? 'bg-blue-50 border-blue-500 text-blue-800 shadow-blue-500/20 dark:bg-blue-900/40 dark:border-blue-400 dark:text-blue-100 dark:shadow-blue-900/30 ring-1 ring-blue-500 dark:ring-blue-400 scale-[1.02]' 
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700'}
+                    `}
                   >
-                    <MdClose size={14} />
+                    {isSelected && (
+                      <span className="text-blue-600 dark:text-blue-400 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center p-0.5 shadow-sm border border-blue-100 dark:border-blue-800">
+                        <MdCheck size={12} />
+                      </span>
+                    )}
+                    {!isSelected && <span>{qe.icon || '📌'}</span>}
+                    <span className="font-medium">{qe.description}</span>
+                    <span className={`text-xs font-bold ${isSelected ? 'text-blue-700 dark:text-blue-300' : 'text-blue-600 dark:text-blue-400'} ml-1`}>₹{qe.amount}</span>
                   </button>
-                </div>
-              ))}
+                );
+              })}
               <button 
                 type="button"
                 onClick={() => setIsAddingQuickExpense(true)}
-                className="flex items-center gap-1 bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 border border-transparent px-3 py-1.5 rounded-full cursor-pointer transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-black/5 hover:bg-black/10 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 border-dashed transition-all"
               >
-                <span className="text-sm font-medium text-slate-600 dark:text-slate-300">+ Add New</span>
+                + Add New
               </button>
             </div>
           </div>

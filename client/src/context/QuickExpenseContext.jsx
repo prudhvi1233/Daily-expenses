@@ -41,6 +41,17 @@ export const QuickExpenseProvider = ({ children }) => {
     }
   };
 
+  const updateQuickExpense = async (id, expenseData) => {
+    try {
+      const { data } = await api.put(`/quick-expenses/${id}`, expenseData);
+      setQuickExpenses((prev) => prev.map(exp => exp._id === id ? data : exp));
+      return data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      throw new Error(message);
+    }
+  };
+
   const deleteQuickExpense = async (id) => {
     try {
       await api.delete(`/quick-expenses/${id}`);
@@ -56,6 +67,7 @@ export const QuickExpenseProvider = ({ children }) => {
       quickExpenses,
       loading,
       addQuickExpense,
+      updateQuickExpense,
       deleteQuickExpense,
       fetchQuickExpenses
     }}>

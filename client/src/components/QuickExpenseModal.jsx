@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { QuickExpenseContext } from '../context/QuickExpenseContext';
 
-const QuickExpenseModal = ({ onClose }) => {
-  const { addQuickExpense } = useContext(QuickExpenseContext);
+const QuickExpenseModal = ({ onClose, expenseToEdit }) => {
+  const { addQuickExpense, updateQuickExpense } = useContext(QuickExpenseContext);
   const [submitting, setSubmitting] = useState(false);
   
   const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
+    defaultValues: expenseToEdit ? {
+      ...expenseToEdit
+    } : {
       amount: '',
       description: '',
       category: 'Food',
@@ -19,7 +21,11 @@ const QuickExpenseModal = ({ onClose }) => {
   const onSubmit = async (data) => {
     try {
       setSubmitting(true);
-      await addQuickExpense(data);
+      if (expenseToEdit) {
+        await updateQuickExpense(expenseToEdit._id, data);
+      } else {
+        await addQuickExpense(data);
+      }
       onClose();
     } catch (error) {
       alert(error.message);
@@ -30,7 +36,7 @@ const QuickExpenseModal = ({ onClose }) => {
 
   return (
     <div className="glass-panel p-6 w-full max-w-sm mx-auto relative z-50">
-      <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">New Quick Expense</h2>
+      <h2 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">{expenseToEdit ? 'Edit Quick Expense' : 'New Quick Expense'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         
         <div className="grid grid-cols-4 gap-3">

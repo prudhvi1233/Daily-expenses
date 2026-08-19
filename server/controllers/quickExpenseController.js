@@ -65,5 +65,6 @@ const deleteQuickExpense = async (req, res) => {
 module.exports = {
   getQuickExpenses,
   addQuickExpense,
+  updateQuickExpense,
   deleteQuickExpense
 };
