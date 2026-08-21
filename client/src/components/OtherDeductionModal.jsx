@@ -23,12 +23,11 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
       setLoading(true);
       setError('');
       
-      const txType = category === 'Other' ? 'other_deduction' : 'expense';
       const finalCategory = category === 'Other' ? 'Other Deduction' : category;
       
       if (deduction) {
         await updateExpense(deduction._id, {
-          type: txType,
+          type: 'other_deduction',
           amount: Number(amount),
           description,
           category: finalCategory,
@@ -38,7 +37,7 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
         });
       } else {
         await addExpense({
-          type: txType,
+          type: 'other_deduction',
           amount: Number(amount),
           description,
           category: finalCategory,

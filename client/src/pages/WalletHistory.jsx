@@ -14,6 +14,7 @@ const WalletHistory = () => {
   const navigate = useNavigate();
   
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
+  const [showOtherCategoriesOnly, setShowOtherCategoriesOnly] = useState(false);
   
   const [editingItem, setEditingItem] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -27,6 +28,12 @@ const WalletHistory = () => {
     // 1. Filter by selected month and type
     const monthExpenses = expenses.filter(tx => {
       if (tx.type !== 'income' && tx.type !== 'other_deduction') return false;
+      
+      if (showOtherCategoriesOnly) {
+        if (tx.type !== 'other_deduction') return false;
+        if (tx.category === 'Other Deduction' || !tx.category) return false;
+      }
+
       const txDate = parseISO(tx.date);
       return isSameMonth(txDate, currentMonth);
     });
@@ -102,14 +109,28 @@ const WalletHistory = () => {
 
   return (
     <div className="pb-12 max-w-5xl mx-auto">
-      <div className="flex items-center gap-4 mb-6">
-        <button 
-          onClick={() => navigate('/dashboard/wallet')}
-          className="p-2 -ml-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5"
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => navigate('/dashboard/wallet')}
+            className="p-2 -ml-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/5"
+          >
+            <MdArrowBack size={24} />
+          </button>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-slate-100">
+            {showOtherCategoriesOnly ? 'Other Category History' : 'Wallet History'}
+          </h1>
+        </div>
+        <button
+          onClick={() => setShowOtherCategoriesOnly(!showOtherCategoriesOnly)}
+          className={`text-sm font-medium px-4 py-2 rounded-lg transition-colors border ${
+            showOtherCategoriesOnly 
+              ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20' 
+              : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-black/10 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-700'
+          }`}
         >
-          <MdArrowBack size={24} />
+          {showOtherCategoriesOnly ? 'View All History' : 'Other Category History'}
         </button>
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-slate-100">Wallet History</h1>
       </div>
 
       {/* Month Navigation */}
