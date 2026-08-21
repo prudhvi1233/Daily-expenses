@@ -32,6 +32,9 @@ const MonthlyGrandTotalPage = () => {
       const desc = (tx.description || '').toLowerCase();
       if (desc.includes('sameer old balance')) return;
 
+      const isOtherCategory = tx.category === 'Other' || tx.category === 'Other Deduction';
+      if (isOtherCategory) return;
+
       const isDeduction = tx.type === 'other_deduction';
       if (isDeduction) {
         deductions += tx.amount;
