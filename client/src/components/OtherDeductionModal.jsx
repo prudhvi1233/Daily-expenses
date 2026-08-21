@@ -6,6 +6,7 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
   const { addExpense, updateExpense } = useContext(ExpenseContext);
   const [amount, setAmount] = useState(deduction ? deduction.amount : '');
   const [description, setDescription] = useState(deduction ? deduction.description : '');
+  const [category, setCategory] = useState(deduction ? (deduction.category === 'Other Deduction' ? 'Other' : deduction.category) : 'Other');
   const [date, setDate] = useState(deduction ? deduction.date : new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState(deduction ? deduction.time : new Date().toTimeString().split(' ')[0].substring(0, 5));
   const [loading, setLoading] = useState(false);
@@ -22,22 +23,25 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
       setLoading(true);
       setError('');
       
+      const txType = category === 'Other' ? 'other_deduction' : 'expense';
+      const finalCategory = category === 'Other' ? 'Other Deduction' : category;
+      
       if (deduction) {
         await updateExpense(deduction._id, {
-          type: 'other_deduction',
+          type: txType,
           amount: Number(amount),
           description,
-          category: 'Other Deduction', // internal placeholder
+          category: finalCategory,
           date: date,
           time: time,
           paymentMethod: 'Wallet'
         });
       } else {
         await addExpense({
-          type: 'other_deduction',
+          type: txType,
           amount: Number(amount),
           description,
-          category: 'Other Deduction', // internal placeholder
+          category: finalCategory,
           date: date,
           time: time,
           paymentMethod: 'Wallet'
@@ -51,6 +55,8 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
       setLoading(false);
     }
   };
+
+  const categories = ['Food', 'Travel', 'Shopping', 'Medical', 'Education', 'Entertainment', 'Recharge', 'Bills', 'Home', 'Fuel', 'Other'];
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
@@ -90,6 +96,19 @@ const OtherDeductionModal = ({ onClose, deduction = null }) => {
               placeholder="e.g. Bank EMI"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Category</label>
+            <select 
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full bg-white dark:bg-slate-800 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-rose-500 appearance-none"
+            >
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
