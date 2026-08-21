@@ -29,9 +29,12 @@ const WalletHistory = () => {
     const monthExpenses = expenses.filter(tx => {
       if (tx.type !== 'income' && tx.type !== 'other_deduction') return false;
       
+      const isOtherCategory = tx.category === 'Other Deduction' || tx.category === 'Other';
+
       if (showOtherCategoriesOnly) {
-        if (tx.type !== 'other_deduction') return false;
-        if (tx.category === 'Other Deduction' || !tx.category) return false;
+        if (!isOtherCategory) return false;
+      } else {
+        if (isOtherCategory) return false;
       }
 
       const txDate = parseISO(tx.date);
@@ -82,7 +85,7 @@ const WalletHistory = () => {
     });
 
     return { groupedDays: structuredDays, monthHasData: true };
-  }, [expenses, currentMonth]);
+  }, [expenses, currentMonth, showOtherCategoriesOnly]);
 
   // Handlers
   const handlePrevMonth = () => setCurrentMonth(prev => subMonths(prev, 1));
